@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
 // Mock console methods to avoid noise in tests
 global.console = {
@@ -12,7 +13,7 @@ global.console = {
 // Mock react-native-web specific APIs if needed
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,

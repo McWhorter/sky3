@@ -60,11 +60,10 @@ describe('Button', () => {
     expect(screen.getByTestId('custom-button')).toBeInTheDocument()
   })
 
-  it('is clickable and accessible', () => {
+  it('has accessible button role', () => {
     render(<Button title="Accessible" onPress={vi.fn()} />)
-    const button = screen.getByText('Accessible')
-    expect(button).toBeInTheDocument()
-    // Tamagui buttons render as divs but are still clickable
-    expect(button.closest('div')).toHaveStyle('cursor: pointer')
+    // Now using Tamagui's actual Button component which has proper semantics
+    expect(screen.getByRole('button')).toBeInTheDocument()
+    expect(screen.getByText('Accessible')).toBeInTheDocument()
   })
 })

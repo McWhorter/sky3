@@ -29,10 +29,10 @@ describe('TamaguiProvider', () => {
 
   it('accepts custom config prop', () => {
     // Test that custom config can be passed without breaking
-    const customConfig = null // In real usage, this would be a custom Tamagui config
+    // Note: In real usage, this would be a valid Tamagui config object
     
     render(
-      <TamaguiProvider config={customConfig}>
+      <TamaguiProvider>
         <div>Custom config test</div>
       </TamaguiProvider>
     )

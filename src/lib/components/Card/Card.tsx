@@ -1,8 +1,8 @@
 import React from 'react';
-import { styled, Stack } from 'tamagui';
+import { styled, YStack } from 'tamagui';
 import type { GetProps } from 'tamagui';
 
-const CardFrame = styled(Stack, {
+const CardFrame = styled(YStack, {
   name: 'Card',
   backgroundColor: '$background',
   borderRadius: '$4',
