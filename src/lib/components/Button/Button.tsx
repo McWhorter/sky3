@@ -9,40 +9,110 @@ const StyledButton = styled(TamaguiButton, {
   variants: {
     variant: {
       primary: {
-        backgroundColor: '$blue10',
-        borderColor: '$blue10',
-        color: '$white1',
+        backgroundColor: '$brand',
+        borderColor: '$brand',
+        color: '$backgroundStrong',
+        hoverStyle: {
+          backgroundColor: '$brandHover',
+          borderColor: '$brandHover',
+        },
+        pressStyle: {
+          backgroundColor: '$brandPress',
+          borderColor: '$brandPress',
+        },
+        focusStyle: {
+          borderColor: '$brandFocus',
+        },
       },
       secondary: {
-        backgroundColor: '$gray8',
-        borderColor: '$gray8',
-        color: '$white1',
+        backgroundColor: '$neutral500',
+        borderColor: '$neutral500',
+        color: '$backgroundStrong',
+        hoverStyle: {
+          backgroundColor: '$neutral600',
+          borderColor: '$neutral600',
+        },
+        pressStyle: {
+          backgroundColor: '$neutral700',
+          borderColor: '$neutral700',
+        },
       },
       outline: {
         backgroundColor: 'transparent',
-        borderColor: '$blue10',
-        color: '$blue10',
+        borderColor: '$brand',
+        color: '$brand',
+        hoverStyle: {
+          backgroundColor: '$brand',
+          color: '$backgroundStrong',
+        },
+        pressStyle: {
+          backgroundColor: '$brandPress',
+          borderColor: '$brandPress',
+          color: '$backgroundStrong',
+        },
+      },
+      success: {
+        backgroundColor: '$success',
+        borderColor: '$success',
+        color: '$backgroundStrong',
+        hoverStyle: {
+          backgroundColor: '$successHover',
+          borderColor: '$successHover',
+        },
+        pressStyle: {
+          backgroundColor: '$successPress',
+          borderColor: '$successPress',
+        },
+      },
+      warning: {
+        backgroundColor: '$warning',
+        borderColor: '$warning',
+        color: '$backgroundStrong',
+        hoverStyle: {
+          backgroundColor: '$warningHover',
+          borderColor: '$warningHover',
+        },
+        pressStyle: {
+          backgroundColor: '$warningPress',
+          borderColor: '$warningPress',
+        },
+      },
+      error: {
+        backgroundColor: '$error',
+        borderColor: '$error',
+        color: '$backgroundStrong',
+        hoverStyle: {
+          backgroundColor: '$errorHover',
+          borderColor: '$errorHover',
+        },
+        pressStyle: {
+          backgroundColor: '$errorPress',
+          borderColor: '$errorPress',
+        },
       },
     },
     
     size: {
       small: {
-        paddingHorizontal: '$3',
-        paddingVertical: '$1.5',
+        paddingHorizontal: '$lg',
+        paddingVertical: '$sm',
         fontSize: '$3',
-        minHeight: 32,
+        minHeight: '$xs',
+        borderRadius: '$sm',
       },
       medium: {
-        paddingHorizontal: '$4',
-        paddingVertical: '$2.5',
+        paddingHorizontal: '$xl',
+        paddingVertical: '$md',
         fontSize: '$4',
-        minHeight: 40,
+        minHeight: '$md',
+        borderRadius: '$md',
       },
       large: {
-        paddingHorizontal: '$5',
-        paddingVertical: '$3.5',
+        paddingHorizontal: '$2xl',
+        paddingVertical: '$lg',
         fontSize: '$5',
-        minHeight: 48,
+        minHeight: '$lg',
+        borderRadius: '$lg',
       },
     },
   } as const,
@@ -56,7 +126,7 @@ const StyledButton = styled(TamaguiButton, {
 export interface ButtonProps extends GetProps<typeof StyledButton> {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'success' | 'warning' | 'error';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 }

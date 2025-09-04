@@ -82,26 +82,50 @@ Our v3 configuration provides:
 - **Component Variants**: Flexible component styling options
 - **Responsive Design**: Breakpoint-based styling
 
-### Extending Themes
+### Custom Design Tokens
 
-To extend or customize themes with the current v3 setup:
+Our configuration now includes comprehensive design tokens that your design team can customize:
+
+#### Token Categories
+
+- **Size & Space Tokens**: Consistent spacing scale from `$0.25` (2px) to `$96` (768px)
+- **Color Tokens**: Brand colors, semantic colors (success, warning, error), and neutral grays
+- **Radius Tokens**: Border radius scale from `$0` to `$full` (9999px)
+- **Z-Index Tokens**: Layering system from `$0` to `$50`
+
+#### Available Token Scales
 
 ```typescript
-// Example: Custom theme extension
-import { createTamagui } from 'tamagui'
-import { config } from '@tamagui/config/v3'
+// Size and space tokens (px values)
+$0.25 = 2px    $1 = 8px     $4 = 32px    $12 = 96px
+$0.5 = 4px     $2 = 16px    $6 = 48px    $16 = 128px
+$0.75 = 6px    $3 = 24px    $8 = 64px    $20 = 160px
 
-const customConfig = createTamagui({
-  ...config,
-  themes: {
-    ...config.themes,
-    // Add custom themes here
-    brand: {
-      ...config.themes.light,
-      primary: '#your-brand-color',
-    },
-  },
-})
+// Color tokens
+$brand500      // Primary brand color
+$success500    // Success state color
+$warning500    // Warning state color
+$error500      // Error state color
+$neutral500    // Neutral gray
+
+// Radius tokens
+$4 = 8px       $8 = 16px    $12 = 24px   $full = 9999px
+```
+
+### Extending Themes
+
+Our extended configuration provides semantic theme tokens:
+
+```typescript
+// Theme-aware styling
+<Button 
+  backgroundColor="$brand" 
+  borderColor="$borderColorFocus"
+  padding="$4"
+  borderRadius="$6"
+>
+  Themed Button
+</Button>
 ```
 
 ### Component Theming
@@ -115,7 +139,107 @@ Components support theme-aware styling:
 </Button>
 ```
 
+## Design Token System
+
+### Token Reference
+
+Our comprehensive token system provides consistent values across all components:
+
+#### Spacing & Sizing
+```typescript
+// Fractional values for fine-tuned spacing
+$0.25, $0.5, $0.75  // 2px, 4px, 6px
+
+// Standard spacing scale
+$1, $2, $3, $4, $5, $6, $8, $10, $12, $16, $20  // 8px - 160px
+
+// Large spacing for layouts
+$24, $32, $40, $48, $64, $80, $96  // 192px - 768px
+
+// Negative spacing for margin adjustments
+$-1, $-2, $-3, $-4, $-6, $-8  // -8px to -64px
+```
+
+#### Color System
+```typescript
+// Brand colors (50-950 scale)
+$brand50   // Lightest tint
+$brand500  // Primary brand color
+$brand950  // Darkest shade
+
+// Semantic colors
+$success500, $warning500, $error500  // State colors
+$neutral50 to $neutral950            // Gray scale
+
+// Theme-aware colors (automatically switch light/dark)
+$background, $color, $borderColor
+$brand, $success, $warning, $error
+```
+
+#### Border Radius
+```typescript
+$0     // No radius
+$1-$4  // Small radius (2px-8px)
+$6-$12 // Medium radius (12px-24px)
+$16-$24// Large radius (32px-48px)
+$full  // Fully rounded (9999px)
+```
+
+### Design Team Customization
+
+To customize the design system, modify the tokens in `tamagui.config.ts`:
+
+```typescript
+// Example: Updating brand colors
+const tokens = createTokens({
+  color: {
+    // Update these values to match your brand
+    brand500: '#your-primary-color',
+    brand600: '#your-primary-hover',
+    
+    // Or update semantic colors
+    success500: '#your-success-color',
+    warning500: '#your-warning-color',
+    error500: '#your-error-color',
+  },
+  
+  // Update spacing scale if needed
+  space: {
+    // Add custom spacing values
+    xs: 4,    // $xs = 4px
+    sm: 8,    // $sm = 8px
+    md: 16,   // $md = 16px
+    lg: 24,   // $lg = 24px
+    xl: 32,   // $xl = 32px
+  },
+})
+```
+
 ## Development Guidelines
+
+### Using Design Tokens
+
+Always use design tokens instead of hardcoded values:
+
+```typescript
+// ✅ Good - Using design tokens
+<Button
+  padding="$4"
+  margin="$2"
+  backgroundColor="$brand"
+  borderRadius="$6"
+  borderColor="$borderColorFocus"
+/>
+
+// ❌ Bad - Hardcoded values
+<Button
+  padding={32}
+  margin={16}
+  backgroundColor="#0ea5e9"
+  borderRadius={12}
+  borderColor="#0284c7"
+/>
+```
 
 ### Theme Testing
 
@@ -129,6 +253,8 @@ When developing themed components:
 ### Best Practices
 
 - **Consistent Token Usage**: Use design tokens instead of hardcoded values
+- **Semantic Colors**: Use theme-aware colors (`$brand`, `$success`) over specific shades
+- **Spacing Scale**: Stick to the defined spacing scale for consistency
 - **Theme Inheritance**: Leverage existing theme structures when possible
 - **Documentation**: Document any custom theme extensions
 - **Testing**: Include theme variations in component stories and tests
