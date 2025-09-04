@@ -1,0 +1,70 @@
+{
+  "name": "react-native-web-ui-lib",
+  "private": false,
+  "version": "1.0.0",
+  "description": "A React Native Web UI component library",
+  "type": "module",
+  "main": "./dist/react-native-web-ui-lib.umd.js",
+  "module": "./dist/react-native-web-ui-lib.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/react-native-web-ui-lib.es.js",
+      "require": "./dist/react-native-web-ui-lib.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:lib": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-web",
+    "ui",
+    "components",
+    "library"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "react-native-web": ">=0.19.0"
+  },
+  "dependencies": {
+    "react-native-svg": "^15.12.1",
+    "react-native-vector-icons": "^10.3.0"
+  },
+  "devDependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-native-web": "^0.21.1",
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@types/react-native-vector-icons": "^6.4.18",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

@@ -1,0 +1,22 @@
+# Source files
+src/
+public/
+*.config.*
+.eslintrc.*
+tsconfig.json
+
+# Development files
+.env*
+.vscode/
+.idea/
+
+# Documentation
+*.md
+!README.md
+
+# Tests and demos
+src/demo/
+
+# Misc
+.DS_Store
+*.log
