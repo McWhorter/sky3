@@ -1,7 +1,64 @@
 import React from 'react';
-import { TextInput, View, Text, StyleSheet } from 'react-native';
+import { styled, Stack, Text } from 'tamagui';
+import { TextInput } from 'react-native';
+import type { GetProps } from 'tamagui';
 
-export interface InputProps {
+const InputContainer = styled(Stack, {
+  name: 'InputContainer',
+  marginVertical: '$2',
+})
+
+const InputLabel = styled(Text, {
+  name: 'InputLabel',
+  fontSize: '$3',
+  fontWeight: '600',
+  color: '$color',
+  marginBottom: '$1',
+})
+
+const StyledInput = styled(TextInput, {
+  name: 'Input',
+  borderWidth: 1,
+  borderColor: '$borderColor',
+  borderRadius: '$4',
+  paddingHorizontal: '$3',
+  paddingVertical: '$2.5',
+  fontSize: '$4',
+  backgroundColor: '$background',
+  minHeight: 40,
+  
+  variants: {
+    hasError: {
+      true: {
+        borderColor: '$red10',
+      },
+    },
+    
+    disabled: {
+      true: {
+        backgroundColor: '$gray2',
+        color: '$gray8',
+        cursor: 'not-allowed',
+      },
+    },
+    
+    multiline: {
+      true: {
+        minHeight: 80,
+        textAlignVertical: 'top',
+      },
+    },
+  } as const,
+})
+
+const ErrorText = styled(Text, {
+  name: 'ErrorText',
+  fontSize: '$2',
+  color: '$red10',
+  marginTop: '$1',
+})
+
+export interface InputProps extends GetProps<typeof StyledInput> {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
@@ -23,17 +80,12 @@ export const Input: React.FC<InputProps> = ({
   multiline = false,
   numberOfLines = 1,
   secureTextEntry = false,
+  ...props
 }) => {
   return (
-    <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
-      <TextInput
-        style={[
-          styles.input,
-          multiline && styles.multiline,
-          disabled && styles.disabled,
-          error && styles.error,
-        ]}
+    <InputContainer>
+      {label && <InputLabel>{label}</InputLabel>}
+      <StyledInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -41,47 +93,11 @@ export const Input: React.FC<InputProps> = ({
         multiline={multiline}
         numberOfLines={numberOfLines}
         secureTextEntry={secureTextEntry}
-        placeholderTextColor="#999999"
+        hasError={!!error}
+        disabled={disabled}
+        {...props}
       />
-      {error && <Text style={styles.errorText}>{error}</Text>}
-    </View>
+      {error && <ErrorText>{error}</ErrorText>}
+    </InputContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 8,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333333',
-    marginBottom: 4,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#DDDDDD',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    backgroundColor: '#FFFFFF',
-    minHeight: 40,
-  },
-  multiline: {
-    minHeight: 80,
-    textAlignVertical: 'top',
-  },
-  disabled: {
-    backgroundColor: '#F5F5F5',
-    color: '#999999',
-  },
-  error: {
-    borderColor: '#FF3B30',
-  },
-  errorText: {
-    fontSize: 12,
-    color: '#FF3B30',
-    marginTop: 4,
-  },
-});

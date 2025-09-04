@@ -1,43 +1,68 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { styled, Stack } from 'tamagui';
+import type { GetProps } from 'tamagui';
 
-export interface CardProps {
+const CardFrame = styled(Stack, {
+  name: 'Card',
+  backgroundColor: '$background',
+  borderRadius: '$4',
+  shadowColor: '$shadowColor',
+  borderWidth: 0,
+  
+  variants: {
+    elevation: {
+      1: {
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        shadowOffset: { width: 0, height: 1 },
+        elevation: 1,
+      },
+      2: {
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
+        elevation: 2,
+      },
+      3: {
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 3,
+      },
+      4: {
+        shadowOpacity: 0.4,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 4,
+      },
+    },
+  } as const,
+  
+  defaultVariants: {
+    elevation: 2,
+  },
+})
+
+export interface CardProps extends GetProps<typeof CardFrame> {
   children: React.ReactNode;
-  elevation?: number;
-  padding?: number;
-  margin?: number;
-  backgroundColor?: string;
-  borderRadius?: number;
+  elevation?: 1 | 2 | 3 | 4;
 }
 
 export const Card: React.FC<CardProps> = ({
   children,
   elevation = 2,
-  padding = 16,
+  padding = '$4',
   margin = 0,
-  backgroundColor = '#FFFFFF',
-  borderRadius = 8,
+  ...props
 }) => {
-  const cardStyle = [
-    styles.base,
-    {
-      padding,
-      margin,
-      backgroundColor,
-      borderRadius,
-      shadowOpacity: elevation * 0.1,
-      shadowRadius: elevation * 2,
-      shadowOffset: { width: 0, height: elevation },
-      elevation, // Android shadow
-    },
-  ];
-
-  return <View style={cardStyle}>{children}</View>;
+  return (
+    <CardFrame
+      elevation={elevation}
+      padding={padding}
+      margin={margin}
+      {...props}
+    >
+      {children}
+    </CardFrame>
+  );
 };
-
-const styles = StyleSheet.create({
-  base: {
-    shadowColor: '#000000',
-    borderWidth: 0,
-  },
-});

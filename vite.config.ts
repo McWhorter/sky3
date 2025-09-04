@@ -1,12 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
+import { tamaguiPlugin } from '@tamagui/vite-plugin'
 import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    tamaguiPlugin({
+      config: './tamagui.config.ts',
+      components: ['@tamagui/core'],
+    }),
     dts({
       insertTypesEntry: true,
       exclude: ['src/demo/**/*', 'src/App.tsx', 'src/main.tsx']

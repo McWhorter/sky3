@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Button, Card, Input } from '../lib';
+import { Text, ScrollView, XStack, YStack, H1, H2 } from 'tamagui';
+import { Button, Card, Input, TamaguiProvider } from '../lib';
 
 export const DemoApp: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
@@ -20,105 +20,80 @@ export const DemoApp: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>React Native Web UI Library Demo</Text>
-        
-        <Card elevation={3} padding={20} margin={10}>
-          <Text style={styles.sectionTitle}>Button Components</Text>
-          <View style={styles.buttonContainer}>
-            <Button title="Primary Button" onPress={handleButtonPress} variant="primary" />
-            <Button title="Secondary Button" onPress={handleButtonPress} variant="secondary" />
-            <Button title="Outline Button" onPress={handleButtonPress} variant="outline" />
-          </View>
+    <TamaguiProvider>
+      <ScrollView backgroundColor="$gray1" flex={1}>
+        <YStack padding="$5" gap="$4">
+          <H1 textAlign="center" color="$color" marginBottom="$4">
+            React Native Web UI Library Demo
+          </H1>
           
-          <View style={styles.buttonContainer}>
-            <Button title="Small" onPress={handleButtonPress} size="small" />
-            <Button title="Medium" onPress={handleButtonPress} size="medium" />
-            <Button title="Large" onPress={handleButtonPress} size="large" />
-          </View>
-          
-          <Button title="Disabled Button" onPress={handleButtonPress} disabled />
-        </Card>
+          <Card elevation={3} padding="$5" margin="$2">
+            <H2 color="$color" marginBottom="$4">Button Components</H2>
+            <XStack gap="$2" marginBottom="$4" flexWrap="wrap">
+              <Button title="Primary Button" onPress={handleButtonPress} variant="primary" />
+              <Button title="Secondary Button" onPress={handleButtonPress} variant="secondary" />
+              <Button title="Outline Button" onPress={handleButtonPress} variant="outline" />
+            </XStack>
+            
+            <XStack gap="$2" marginBottom="$4" flexWrap="wrap">
+              <Button title="Small" onPress={handleButtonPress} size="small" />
+              <Button title="Medium" onPress={handleButtonPress} size="medium" />
+              <Button title="Large" onPress={handleButtonPress} size="large" />
+            </XStack>
+            
+            <Button title="Disabled Button" onPress={handleButtonPress} disabled />
+          </Card>
 
-        <Card elevation={3} padding={20} margin={10}>
-          <Text style={styles.sectionTitle}>Input Components</Text>
-          <Input
-            label="Name"
-            placeholder="Enter your name"
-            value={inputValue}
-            onChangeText={handleInputChange}
-            error={inputError}
-          />
-          <Input
-            label="Email"
-            placeholder="Enter your email"
-            value=""
-            onChangeText={() => {}}
-          />
-          <Input
-            label="Password"
-            placeholder="Enter password"
-            value=""
-            onChangeText={() => {}}
-            secureTextEntry
-          />
-          <Input
-            label="Description"
-            placeholder="Enter description"
-            value=""
-            onChangeText={() => {}}
-            multiline
-            numberOfLines={4}
-          />
-          <Input
-            label="Disabled Input"
-            placeholder="This is disabled"
-            value="Disabled value"
-            onChangeText={() => {}}
-            disabled
-          />
-        </Card>
+          <Card elevation={3} padding="$5" margin="$2">
+            <H2 color="$color" marginBottom="$4">Input Components</H2>
+            <Input
+              label="Name"
+              placeholder="Enter your name"
+              value={inputValue}
+              onChangeText={handleInputChange}
+              error={inputError}
+            />
+            <Input
+              label="Email"
+              placeholder="Enter your email"
+              value=""
+              onChangeText={() => {}}
+            />
+            <Input
+              label="Password"
+              placeholder="Enter password"
+              value=""
+              onChangeText={() => {}}
+              secureTextEntry
+            />
+            <Input
+              label="Description"
+              placeholder="Enter description"
+              value=""
+              onChangeText={() => {}}
+              multiline
+              numberOfLines={4}
+            />
+            <Input
+              label="Disabled Input"
+              placeholder="This is disabled"
+              value="Disabled value"
+              onChangeText={() => {}}
+              disabled
+            />
+          </Card>
 
-        <Card elevation={1} padding={15} margin={10} backgroundColor="#F8F9FA">
-          <Text style={styles.sectionTitle}>Card Variants</Text>
-          <Text>This is a card with light background and low elevation.</Text>
-        </Card>
+          <Card elevation={1} padding="$4" margin="$2" backgroundColor="$gray3">
+            <H2 color="$color" marginBottom="$3">Card Variants</H2>
+            <Text color="$color">This is a card with light background and low elevation.</Text>
+          </Card>
 
-        <Card elevation={5} padding={25} margin={10} backgroundColor="#E3F2FD" borderRadius={16}>
-          <Text style={styles.sectionTitle}>Custom Card</Text>
-          <Text>This card has custom styling with higher elevation and rounded corners.</Text>
-        </Card>
-      </View>
-    </ScrollView>
+          <Card elevation={4} padding="$6" margin="$2" backgroundColor="$blue2" borderRadius="$6">
+            <H2 color="$color" marginBottom="$3">Custom Card</H2>
+            <Text color="$color">This card has custom styling with higher elevation and rounded corners.</Text>
+          </Card>
+        </YStack>
+      </ScrollView>
+    </TamaguiProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F5',
-  },
-  content: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 30,
-    color: '#333333',
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 15,
-    color: '#333333',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 10,
-    marginBottom: 15,
-    flexWrap: 'wrap',
-  },
-});

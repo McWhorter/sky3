@@ -1,12 +1,106 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { styled, Stack, Text } from 'tamagui';
+import type { GetProps } from 'tamagui';
 
-export interface ButtonProps {
+const ButtonFrame = styled(Stack, {
+  name: 'Button',
+  borderRadius: '$4',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderWidth: 1,
+  cursor: 'pointer',
+  pressStyle: {
+    opacity: 0.8,
+  },
+  
+  variants: {
+    variant: {
+      primary: {
+        backgroundColor: '$blue10',
+        borderColor: '$blue10',
+      },
+      secondary: {
+        backgroundColor: '$gray8',
+        borderColor: '$gray8',
+      },
+      outline: {
+        backgroundColor: 'transparent',
+        borderColor: '$blue10',
+      },
+    },
+    
+    size: {
+      small: {
+        paddingHorizontal: '$3',
+        paddingVertical: '$1.5',
+        minHeight: 32,
+      },
+      medium: {
+        paddingHorizontal: '$4',
+        paddingVertical: '$2.5',
+        minHeight: 40,
+      },
+      large: {
+        paddingHorizontal: '$5',
+        paddingVertical: '$3.5',
+        minHeight: 48,
+      },
+    },
+    
+    disabled: {
+      true: {
+        opacity: 0.5,
+        cursor: 'not-allowed',
+      },
+    },
+  } as const,
+  
+  defaultVariants: {
+    variant: 'primary',
+    size: 'medium',
+  },
+})
+
+const ButtonText = styled(Text, {
+  name: 'ButtonText',
+  fontWeight: '600',
+  textAlign: 'center',
+  
+  variants: {
+    variant: {
+      primary: {
+        color: '$white1',
+      },
+      secondary: {
+        color: '$white1',
+      },
+      outline: {
+        color: '$blue10',
+      },
+    },
+    
+    size: {
+      small: {
+        fontSize: '$3',
+      },
+      medium: {
+        fontSize: '$4',
+      },
+      large: {
+        fontSize: '$5',
+      },
+    },
+  } as const,
+  
+  defaultVariants: {
+    variant: 'primary',
+    size: 'medium',
+  },
+})
+
+export interface ButtonProps extends GetProps<typeof ButtonFrame> {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -15,89 +109,19 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'medium',
   disabled = false,
+  ...props
 }) => {
-  const buttonStyle = [
-    styles.base,
-    styles[variant],
-    styles[size],
-    disabled && styles.disabled,
-  ];
-
-  const textStyle = [
-    styles.text,
-    styles[`text${variant.charAt(0).toUpperCase() + variant.slice(1)}` as keyof typeof styles],
-    styles[`text${size.charAt(0).toUpperCase() + size.slice(1)}` as keyof typeof styles],
-  ];
-
   return (
-    <TouchableOpacity
-      style={buttonStyle}
-      onPress={onPress}
+    <ButtonFrame
+      variant={variant}
+      size={size}
       disabled={disabled}
-      activeOpacity={0.8}
+      onPress={onPress}
+      {...props}
     >
-      <Text style={textStyle}>{title}</Text>
-    </TouchableOpacity>
+      <ButtonText variant={variant} size={size}>
+        {title}
+      </ButtonText>
+    </ButtonFrame>
   );
 };
-
-const styles = StyleSheet.create({
-  base: {
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-  },
-  primary: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF',
-  },
-  secondary: {
-    backgroundColor: '#6C757D',
-    borderColor: '#6C757D',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    borderColor: '#007AFF',
-  },
-  small: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    minHeight: 32,
-  },
-  medium: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    minHeight: 40,
-  },
-  large: {
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    minHeight: 48,
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-  text: {
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  textPrimary: {
-    color: '#FFFFFF',
-  },
-  textSecondary: {
-    color: '#FFFFFF',
-  },
-  textOutline: {
-    color: '#007AFF',
-  },
-  textSmall: {
-    fontSize: 14,
-  },
-  textMedium: {
-    fontSize: 16,
-  },
-  textLarge: {
-    fontSize: 18,
-  },
-});
