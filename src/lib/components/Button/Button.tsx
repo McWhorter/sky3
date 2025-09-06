@@ -1,152 +1,269 @@
-import { getSize } from '@tamagui/get-token';
-import { View, Text, styled, useTheme, withStaticProperties } from '@tamagui/web';
-import { cloneElement, isValidElement, useContext } from 'react';
-import { ButtonContext } from './ButtonContext';
+import React from 'react';
+import { Stack } from 'tamagui';
 
-export const ButtonFrame = styled(View, {
-  name: 'Button',
-  context: ButtonContext,
-  backgroundColor: '$gray1',
-  borderColor: '$gray6',
-  padding: '$2',
-  borderWidth: 1,
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  role: 'button',
-  tabIndex: 0,
+// Define our custom button variants
+export interface ButtonProps {
+  /**
+   * Size variant of the button
+   * @default 'md'
+   */
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-  hoverStyle: {
-    backgroundColor: '$gray2',
-    borderColor: '$gray7',
-  },
+  /**
+   * Visual variant of the button
+   * @default 'primary'
+   */
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
 
-  pressStyle: {
-    backgroundColor: '$gray3',
-  },
+  /**
+   * Color scheme for the button
+   * @default 'default'
+   */
+  colorScheme?: 'default' | 'success' | 'warning' | 'error' | 'info';
 
-  disabledStyle: {
-    opacity: 0.6,
-    cursor: 'not-allowed',
-    pointerEvents: 'none',
-  },
+  /**
+   * Whether the button should take full width
+   * @default false
+   */
+  fullWidth?: boolean;
 
-  variants: {
-    variant: {
-      primary: {
-        backgroundColor: '$blue9',
-        borderColor: '$blue9',
-        color: '$white',
-        hoverStyle: {
-          backgroundColor: '$blue10',
-          borderColor: '$blue10',
-        },
-        pressStyle: {
-          backgroundColor: '$blue11',
-          borderColor: '$blue11',
-        },
-      },
-      secondary: {
-        backgroundColor: '$gray6',
-        borderColor: '$gray6',
-        color: '$gray12',
-        hoverStyle: {
-          backgroundColor: '$gray7',
-          borderColor: '$gray7',
-        },
-        pressStyle: {
-          backgroundColor: '$gray8',
-          borderColor: '$gray8',
-        },
-      },
-      outline: {
-        backgroundColor: '$transparent',
-        borderColor: '$gray6',
-        color: '$gray12',
-        hoverStyle: {
-          backgroundColor: '$gray2',
-          borderColor: '$gray7',
-        },
-        pressStyle: {
-          backgroundColor: '$gray3',
-        },
-      },
-    },
-    size: {
-      sm: {
-        height: '$sm',
-        gap: '$1',
-        borderRadius: '$sm',
-        paddingHorizontal: '$3',
-      },
-      md: {
-        height: '$md',
-        gap: '$2',
-        borderRadius: '$md',
-        paddingHorizontal: '$4',
-      },
-      lg: {
-        height: '$lg',
-        gap: '$2',
-        borderRadius: '$lg',
-        paddingHorizontal: '$5',
-      },
-    },
-  } as const,
+  /**
+   * Whether the button is in a loading state
+   * @default false
+   */
+  loading?: boolean;
 
-  defaultVariants: {
-    size: 'md',
-  },
-});
+  /**
+   * Whether the button is disabled
+   * @default false
+   */
+  disabled?: boolean;
 
-export const ButtonText = styled(Text, {
-  name: 'ButtonText',
-  context: ButtonContext,
-  userSelect: 'none',
-  color: '$gray12',
-  fontWeight: '500',
+  /**
+   * Icon to display before the button text
+   */
+  leftIcon?: React.ReactNode;
 
-  variants: {
-    size: {
-      sm: {
-        fontSize: '$sm',
-      },
-      md: {
-        fontSize: '$md',
-      },
-      lg: {
-        fontSize: '$lg',
-      },
-    },
-  } as const,
-});
+  /**
+   * Icon to display after the button text
+   */
+  rightIcon?: React.ReactNode;
 
-interface ButtonIconProps {
-  children: React.ReactElement;
+  /**
+   * Button content
+   */
+  children?: React.ReactNode;
+
+  /**
+   * Click handler
+   */
+  onClick?: () => void;
+
+  /**
+   * Additional props
+   */
+  [key: string]: any;
 }
 
-const ButtonIcon = ({ children }: ButtonIconProps) => {
-  const { size, color } = useContext(ButtonContext.context);
-  const smaller = getSize(size, {
-    shift: -2,
-  });
-  const theme = useTheme();
+// Main Button component
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      size = 'md',
+      variant = 'primary',
+      colorScheme = 'default',
+      fullWidth = false,
+      loading = false,
+      disabled = false,
+      leftIcon,
+      rightIcon,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    // Get size styles
+    const getSizeStyles = () => {
+      switch (size) {
+        case 'xs':
+          return {
+            height: '$6',
+            paddingHorizontal: '$3',
+            fontSize: '$2',
+            lineHeight: '$2',
+            gap: '$1',
+          };
+        case 'sm':
+          return {
+            height: '$8',
+            paddingHorizontal: '$4',
+            fontSize: '$3',
+            lineHeight: '$3',
+            gap: '$2',
+          };
+        case 'lg':
+          return {
+            height: '$12',
+            paddingHorizontal: '$6',
+            fontSize: '$4',
+            lineHeight: '$4',
+            gap: '$3',
+          };
+        case 'xl':
+          return {
+            height: '$14',
+            paddingHorizontal: '$8',
+            fontSize: '$5',
+            lineHeight: '$5',
+            gap: '$3',
+          };
+        default: // md
+          return {
+            height: '$10',
+            paddingHorizontal: '$5',
+            fontSize: '$3',
+            lineHeight: '$3',
+            gap: '$2',
+          };
+      }
+    };
 
-  if (!isValidElement(children)) {
-    return null;
+    // Get variant styles
+    const getVariantStyles = () => {
+      switch (variant) {
+        case 'outline':
+          return {
+            backgroundColor: 'transparent',
+            borderColor: '$primary',
+            color: '$primary',
+          };
+        case 'ghost':
+          return {
+            backgroundColor: 'transparent',
+            borderColor: 'transparent',
+            color: '$primary',
+          };
+        case 'link':
+          return {
+            backgroundColor: 'transparent',
+            borderColor: 'transparent',
+            color: '$primary',
+            textDecoration: 'underline',
+            height: 'auto',
+            paddingHorizontal: 0,
+            paddingVertical: 0,
+          };
+        case 'secondary':
+          return {
+            backgroundColor: '$secondary',
+            borderColor: '$secondary',
+            color: '$background',
+          };
+        default: // primary
+          return {
+            backgroundColor: '$primary',
+            borderColor: '$primary',
+            color: '$background',
+          };
+      }
+    };
+
+    // Get color scheme styles
+    const getColorSchemeStyles = () => {
+      if (colorScheme === 'default') return {};
+
+      switch (colorScheme) {
+        case 'success':
+          return {
+            backgroundColor: '$success',
+            borderColor: '$success',
+            color: '$background',
+          };
+        case 'warning':
+          return {
+            backgroundColor: '$warning',
+            borderColor: '$warning',
+            color: '$background',
+          };
+        case 'error':
+          return {
+            backgroundColor: '$error',
+            borderColor: '$error',
+            color: '$background',
+          };
+        case 'info':
+          return {
+            backgroundColor: '$info',
+            borderColor: '$info',
+            color: '$background',
+          };
+        default:
+          return {};
+      }
+    };
+
+    const sizeStyles = getSizeStyles();
+    const variantStyles = getVariantStyles();
+    const colorSchemeStyles = getColorSchemeStyles();
+
+    return (
+      <Stack
+        ref={ref}
+        disabled={disabled || loading}
+        borderRadius="$4"
+        borderWidth={1}
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        fontFamily="$body"
+        fontWeight="$4"
+        transition="all 0.2s ease"
+        userSelect="none"
+        flexDirection="row"
+        width={fullWidth ? '100%' : undefined}
+        opacity={loading ? 0.7 : undefined}
+        pointerEvents={loading ? 'none' : undefined}
+        {...sizeStyles}
+        {...variantStyles}
+        {...colorSchemeStyles}
+        {...props}
+      >
+        {loading && (
+          <div
+            style={{
+              width: '1em',
+              height: '1em',
+              border: '2px solid currentColor',
+              borderTop: '2px solid transparent',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+              marginRight: leftIcon || children ? '0.5em' : 0,
+            }}
+          />
+        )}
+        {!loading && leftIcon && (
+          <span style={{ marginRight: children ? '0.5em' : 0 }}>{leftIcon}</span>
+        )}
+        {children}
+        {!loading && rightIcon && (
+          <span style={{ marginLeft: children ? '0.5em' : 0 }}>{rightIcon}</span>
+        )}
+      </Stack>
+    );
   }
+);
 
-  const iconProps = {
-    size: smaller.val * 0.5,
-    color: theme[color]?.get() || theme.gray12?.get(),
-  };
+Button.displayName = 'Button';
 
-  return cloneElement(children, iconProps);
-};
-
-export const Button = withStaticProperties(ButtonFrame, {
-  Props: ButtonContext.Provider,
-  Text: ButtonText,
-  Icon: ButtonIcon,
-});
+// Add CSS animation for loading spinner
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(style);
+}

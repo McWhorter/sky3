@@ -1,75 +1,156 @@
-import { createTokens } from 'tamagui';
+import { createTokens } from '@tamagui/core';
 
 export const tokens = createTokens({
-  // width, height, minWidth, minHeight, maxWidth, maxHeight
+  // Size tokens for consistent sizing across components
   size: {
-    // Button heights and component sizes
-    sm: 32,
-    md: 40,
-    true: 40,
-    lg: 48,
-    // Small measurements
-    // $1: 14,
-    // $2: 16,
-    // $3: 18,
-    // $4: 20,
-    // $5: 24,
+    0: 0,
+    1: 4,
+    2: 8,
+    3: 12,
+    4: 16,
+    5: 20,
+    6: 24,
+    7: 28,
+    8: 32,
+    9: 36,
+    10: 40,
+    11: 44,
+    12: 48,
+    13: 52,
+    14: 56,
+    15: 60,
+    16: 64,
+    17: 68,
+    18: 72,
+    19: 76,
+    20: 80,
   },
 
-  // fontSize
-  fontSize: {
-    sm: 14,
-    md: 16,
-    true: 16,
-    lg: 18,
-    xl: 20,
-    // $1: 12,
-    // $2: 14,
-    // $3: 16,
-    // $4: 18,
-    // $5: 20,
-    // $6: 24,
-  },
-
-  // Basic color tokens - let themes.ts handle the color scales
-  color: {
-    white: '#fff',
-    black: '#000',
-    transparent: 'transparent',
-  },
-
-  // borderRadius, borderTopLeftRadius, borderTopRightRadius, borderBottomLeftRadius, borderBottomRightRadius
-  radius: {
-    none: 0,
-    sm: 2,
-    true: 2,
-    md: 4,
-    lg: 6,
-    full: 999,
-  },
-
-  // zIndex
-  zIndex: {
-    $0: 0,
-    true: 0,
-    $1: 1,
-    $2: 2,
-    $3: 3,
-    $4: 4,
-    $5: 5,
-    $6: 6,
-    $7: 7,
-    $8: 8,
-    $9: 9,
-    $10: 10,
-  },
-
-  // spacing for padding, margin, gap
+  // Space tokens for consistent spacing
   space: {
-    sm: 4,
-    true: 4,
-    md: 8,
-    lg: 12,
-    xl: 16,
+    0: 0,
+    1: 4,
+    2: 8,
+    3: 12,
+    4: 16,
+    5: 20,
+    6: 24,
+    7: 28,
+    8: 32,
+    9: 36,
+    10: 40,
+    11: 44,
+    12: 48,
+    13: 52,
+    14: 56,
+    15: 60,
+    16: 64,
+    17: 68,
+    18: 72,
+    19: 76,
+    20: 80,
+  },
+
+  // Font size tokens
+  font: {
+    1: 12,
+    2: 14,
+    3: 16,
+    4: 18,
+    5: 20,
+    6: 24,
+    7: 28,
+    8: 32,
+    9: 36,
+    10: 40,
+    11: 44,
+    12: 48,
+    13: 52,
+    14: 56,
+    15: 60,
+    16: 64,
+    17: 68,
+    18: 72,
+    19: 76,
+    20: 80,
+  },
+
+  // Font weight tokens
+  weight: {
+    1: '300',
+    2: '400',
+    3: '500',
+    4: '600',
+    5: '700',
+    6: '800',
+    7: '900',
+  },
+
+  // Line height tokens
+  lineHeight: {
+    1: 16,
+    2: 20,
+    3: 24,
+    4: 28,
+    5: 32,
+    6: 36,
+    7: 40,
+    8: 44,
+    9: 48,
+    10: 52,
+    11: 56,
+    12: 60,
+    13: 64,
+    14: 68,
+    15: 72,
+    16: 76,
+    17: 80,
+    18: 84,
+    19: 88,
+    20: 92,
+  },
+
+  // Letter spacing tokens
+  letterSpacing: {
+    1: -1,
+    2: -0.5,
+    3: 0,
+    4: 0.5,
+    5: 1,
+    6: 1.5,
+    7: 2,
+    8: 2.5,
+    9: 3,
+    10: 3.5,
+  },
+
+  // Border radius tokens
+  radius: {
+    0: 0,
+    1: 2,
+    2: 4,
+    3: 6,
+    4: 8,
+    5: 10,
+    6: 12,
+    7: 14,
+    8: 16,
+    9: 18,
+    10: 20,
+  },
+
+  // Z-index tokens
+  zIndex: {
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    10: 10,
   },
 });

@@ -1,237 +1,175 @@
-import { createThemes } from '@tamagui/theme-builder';
-import {
-  blue,
-  blueDark,
-  gray,
-  grayDark,
-  green,
-  greenDark,
-  orange,
-  orangeDark,
-  pink,
-  pinkDark,
-  purple,
-  purpleDark,
-  red,
-  redDark,
-  yellow,
-  yellowDark,
-} from '@tamagui/colors';
+// Light theme colors
+export const lightTheme = {
+  // Background colors
+  background: '#ffffff',
+  backgroundHover: '#f8f9fa',
+  backgroundPress: '#e9ecef',
+  backgroundFocus: '#e9ecef',
+  backgroundStrong: '#f8f9fa',
+  backgroundTransparent: 'rgba(255, 255, 255, 0)',
 
-const colorTokens = {
-  light: {
-    blue,
-    gray,
-    green,
-    orange,
-    pink,
-    purple,
-    red,
-    yellow,
-  },
-  dark: {
-    blue: blueDark,
-    gray: grayDark,
-    green: greenDark,
-    orange: orangeDark,
-    pink: pinkDark,
-    purple: purpleDark,
-    red: redDark,
-    yellow: yellowDark,
-  },
+  // Text colors
+  color: '#212529',
+  colorHover: '#495057',
+  colorPress: '#6c757d',
+  colorFocus: '#6c757d',
+  colorTransparent: 'rgba(33, 37, 41, 0)',
+
+  // Border colors
+  borderColor: '#dee2e6',
+  borderColorHover: '#adb5bd',
+  borderColorPress: '#6c757d',
+  borderColorFocus: '#0d6efd',
+
+  // Shadow colors
+  shadowColor: 'rgba(0, 0, 0, 0.1)',
+  shadowColorHover: 'rgba(0, 0, 0, 0.15)',
+  shadowColorPress: 'rgba(0, 0, 0, 0.2)',
+  shadowColorFocus: 'rgba(13, 110, 253, 0.25)',
+
+  // Primary colors
+  primary: '#0d6efd',
+  primaryHover: '#0b5ed7',
+  primaryPress: '#0a58ca',
+  primaryFocus: '#0a58ca',
+  primaryTransparent: 'rgba(13, 110, 253, 0.1)',
+
+  // Secondary colors
+  secondary: '#6c757d',
+  secondaryHover: '#5c636a',
+  secondaryPress: '#565e64',
+  secondaryFocus: '#565e64',
+  secondaryTransparent: 'rgba(108, 117, 125, 0.1)',
+
+  // Success colors
+  success: '#198754',
+  successHover: '#157347',
+  successPress: '#146c43',
+  successFocus: '#146c43',
+  successTransparent: 'rgba(25, 135, 84, 0.1)',
+
+  // Warning colors
+  warning: '#ffc107',
+  warningHover: '#ffca2c',
+  warningPress: '#ffcd39',
+  warningFocus: '#ffcd39',
+  warningTransparent: 'rgba(255, 193, 7, 0.1)',
+
+  // Error colors
+  error: '#dc3545',
+  errorHover: '#bb2d3b',
+  errorPress: '#b02a37',
+  errorFocus: '#b02a37',
+  errorTransparent: 'rgba(220, 53, 69, 0.1)',
+
+  // Info colors
+  info: '#0dcaf0',
+  infoHover: '#3dd5f3',
+  infoPress: '#6eddf6',
+  infoFocus: '#6eddf6',
+  infoTransparent: 'rgba(13, 202, 240, 0.1)',
+
+  // Neutral colors
+  neutral: '#6c757d',
+  neutralHover: '#5c636a',
+  neutralPress: '#565e64',
+  neutralFocus: '#565e64',
+  neutralTransparent: 'rgba(108, 117, 125, 0.1)',
+
+  // Placeholder colors
+  placeholderColor: '#6c757d',
+  placeholderColorHover: '#5c636a',
+  placeholderColorPress: '#565e64',
+  placeholderColorFocus: '#565e64',
 };
 
-const darkPalette = [
-  '#050505',
-  '#151515',
-  '#191919',
-  '#232323',
-  '#282828',
-  '#323232',
-  '#424242',
-  '#494949',
-  '#545454',
-  '#626262',
-  '#a5a5a5',
-  '#fff',
-];
+// Dark theme colors
+export const darkTheme = {
+  // Background colors
+  background: '#0d1117',
+  backgroundHover: '#161b22',
+  backgroundPress: '#21262d',
+  backgroundFocus: '#21262d',
+  backgroundStrong: '#161b22',
+  backgroundTransparent: 'rgba(13, 17, 23, 0)',
 
-const lightPalette = [
-  '#fff',
-  '#f8f8f8',
-  'hsl(0, 0%, 96.3%)',
-  'hsl(0, 0%, 94.1%)',
-  'hsl(0, 0%, 92.0%)',
-  'hsl(0, 0%, 90.0%)',
-  'hsl(0, 0%, 88.5%)',
-  'hsl(0, 0%, 81.0%)',
-  'hsl(0, 0%, 56.1%)',
-  'hsl(0, 0%, 50.3%)',
-  'hsl(0, 0%, 42.5%)',
-  'hsl(0, 0%, 9.0%)',
-];
+  // Text colors
+  color: '#f0f6fc',
+  colorHover: '#c9d1d9',
+  colorPress: '#8b949e',
+  colorFocus: '#8b949e',
+  colorTransparent: 'rgba(240, 246, 252, 0)',
 
-const lightShadows = {
-  shadow1: 'rgba(0,0,0,0.04)',
-  shadow2: 'rgba(0,0,0,0.08)',
-  shadow3: 'rgba(0,0,0,0.16)',
-  shadow4: 'rgba(0,0,0,0.24)',
-  shadow5: 'rgba(0,0,0,0.32)',
-  shadow6: 'rgba(0,0,0,0.4)',
+  // Border colors
+  borderColor: '#30363d',
+  borderColorHover: '#484f58',
+  borderColorPress: '#6e7681',
+  borderColorFocus: '#1f6feb',
+
+  // Shadow colors
+  shadowColor: 'rgba(0, 0, 0, 0.3)',
+  shadowColorHover: 'rgba(0, 0, 0, 0.4)',
+  shadowColorPress: 'rgba(0, 0, 0, 0.5)',
+  shadowColorFocus: 'rgba(31, 111, 235, 0.3)',
+
+  // Primary colors
+  primary: '#1f6feb',
+  primaryHover: '#388bfd',
+  primaryPress: '#4dabf7',
+  primaryFocus: '#4dabf7',
+  primaryTransparent: 'rgba(31, 111, 235, 0.1)',
+
+  // Secondary colors
+  secondary: '#6e7681',
+  secondaryHover: '#8b949e',
+  secondaryPress: '#a1a9b3',
+  secondaryFocus: '#a1a9b3',
+  secondaryTransparent: 'rgba(110, 118, 129, 0.1)',
+
+  // Success colors
+  success: '#238636',
+  successHover: '#2ea043',
+  successPress: '#3fb950',
+  successFocus: '#3fb950',
+  successTransparent: 'rgba(35, 134, 54, 0.1)',
+
+  // Warning colors
+  warning: '#d29922',
+  warningHover: '#e3b341',
+  warningPress: '#f2cc60',
+  warningFocus: '#f2cc60',
+  warningTransparent: 'rgba(210, 153, 34, 0.1)',
+
+  // Error colors
+  error: '#da3633',
+  errorHover: '#f85149',
+  errorPress: '#ff6b6b',
+  errorFocus: '#ff6b6b',
+  errorTransparent: 'rgba(218, 54, 51, 0.1)',
+
+  // Info colors
+  info: '#0969da',
+  infoHover: '#2188ff',
+  infoPress: '#54aeff',
+  infoFocus: '#54aeff',
+  infoTransparent: 'rgba(9, 105, 218, 0.1)',
+
+  // Neutral colors
+  neutral: '#6e7681',
+  neutralHover: '#8b949e',
+  neutralPress: '#a1a9b3',
+  neutralFocus: '#a1a9b3',
+  neutralTransparent: 'rgba(110, 118, 129, 0.1)',
+
+  // Placeholder colors
+  placeholderColor: '#6e7681',
+  placeholderColorHover: '#8b949e',
+  placeholderColorPress: '#a1a9b3',
+  placeholderColorFocus: '#a1a9b3',
 };
 
-const darkShadows = {
-  shadow1: 'rgba(0,0,0,0.2)',
-  shadow2: 'rgba(0,0,0,0.3)',
-  shadow3: 'rgba(0,0,0,0.4)',
-  shadow4: 'rgba(0,0,0,0.5)',
-  shadow5: 'rgba(0,0,0,0.6)',
-  shadow6: 'rgba(0,0,0,0.7)',
+// Export theme collection
+export const themes = {
+  light: lightTheme,
+  dark: darkTheme,
 };
-
-export const themes = createThemes({
-  base: {
-    palette: {
-      dark: darkPalette,
-      light: lightPalette,
-    },
-
-    // we set a bunch of colors like $red1 => $red1
-    // we only want to set it on the base light/dark theme
-    extra: {
-      light: {
-        ...colorTokens.light.blue,
-        ...colorTokens.light.gray,
-        ...colorTokens.light.green,
-        ...colorTokens.light.orange,
-        ...colorTokens.light.pink,
-        ...colorTokens.light.purple,
-        ...colorTokens.light.red,
-        ...colorTokens.light.yellow,
-        ...lightShadows,
-        shadowColor: lightShadows.shadow1,
-      },
-      dark: {
-        ...colorTokens.dark.blue,
-        ...colorTokens.dark.gray,
-        ...colorTokens.dark.green,
-        ...colorTokens.dark.orange,
-        ...colorTokens.dark.pink,
-        ...colorTokens.dark.purple,
-        ...colorTokens.dark.red,
-        ...colorTokens.dark.yellow,
-        ...darkShadows,
-        shadowColor: darkShadows.shadow1,
-      },
-    },
-  },
-
-  accent: {
-    palette: {
-      dark: lightPalette,
-      light: darkPalette,
-    },
-    template: 'inverse',
-  },
-
-  childrenThemes: {
-    gray: {
-      palette: {
-        dark: Object.values(colorTokens.dark.gray),
-        light: Object.values(colorTokens.light.gray),
-      },
-    },
-    blue: {
-      palette: {
-        dark: Object.values(colorTokens.dark.blue),
-        light: Object.values(colorTokens.light.blue),
-      },
-    },
-    orange: {
-      palette: {
-        dark: Object.values(colorTokens.dark.orange),
-        light: Object.values(colorTokens.light.orange),
-      },
-    },
-    red: {
-      palette: {
-        dark: Object.values(colorTokens.dark.red),
-        light: Object.values(colorTokens.light.red),
-      },
-    },
-    yellow: {
-      palette: {
-        dark: Object.values(colorTokens.dark.yellow),
-        light: Object.values(colorTokens.light.yellow),
-      },
-    },
-    green: {
-      palette: {
-        dark: Object.values(colorTokens.dark.green),
-        light: Object.values(colorTokens.light.green),
-      },
-    },
-    purple: {
-      palette: {
-        dark: Object.values(colorTokens.dark.purple),
-        light: Object.values(colorTokens.light.purple),
-      },
-    },
-    pink: {
-      palette: {
-        dark: Object.values(colorTokens.dark.pink),
-        light: Object.values(colorTokens.light.pink),
-      },
-    },
-    tan: {
-      palette: {
-        light: [
-          'hsla(40, 30%, 98%, 1)',
-          'hsla(40, 24%, 94%, 1)',
-          'hsla(38, 23%, 91%, 1)',
-          'hsla(36, 20%, 90%, 1)',
-          'hsla(36, 20%, 88%, 1)',
-          'hsla(35, 20%, 85%, 1)',
-          'hsla(35, 21%, 74%, 1)',
-          'hsla(34, 20%, 70%, 1)',
-          'hsla(35, 20%, 67%, 1)',
-          'hsla(34, 19%, 47%, 1)',
-          'hsla(35, 18%, 37%, 1)',
-          'hsla(35, 17%, 20%, 1)',
-        ],
-        dark: [
-          'hsla(30, 9%, 10%, 1)',
-          'hsla(30, 10%, 12%, 1)',
-          'hsla(31, 11%, 18%, 1)',
-          'hsla(30, 12%, 23%, 1)',
-          'hsla(30, 14%, 28%, 1)',
-          'hsla(30, 16%, 33%, 1)',
-          'hsla(30, 18%, 38%, 1)',
-          'hsla(30, 20%, 45%, 1)',
-          'hsla(30, 21%, 50%, 1)',
-          'hsla(29, 22%, 58%, 1)',
-          'hsla(34, 24%, 70%, 1)',
-          'hsla(11, 12%, 79%, 1)',
-        ],
-      },
-    },
-  },
-
-  grandChildrenThemes: {
-    alt1: {
-      template: 'alt1',
-    },
-    alt2: {
-      template: 'alt2',
-    },
-    surface1: {
-      template: 'surface1',
-    },
-    surface2: {
-      template: 'surface2',
-    },
-    surface3: {
-      template: 'surface3',
-    },
-  },
-});

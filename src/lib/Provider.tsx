@@ -1,7 +1,7 @@
 import React from 'react';
 import { TamaguiProvider } from 'tamagui';
 import type { TamaguiProviderProps } from 'tamagui';
-import { config as defaultConfig } from '../../skylight/config';
+import { skylightConfig as defaultConfig } from '../../skylight/config';
 
 export interface ProviderProps extends Omit<TamaguiProviderProps, 'config'> {
   config?: TamaguiProviderProps['config'];

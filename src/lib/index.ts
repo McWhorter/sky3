@@ -1,6 +1,10 @@
-// Main library entry point
-export * from './Provider';
+// Provider
+export { Provider } from './Provider';
+export type { ProviderProps } from './Provider';
+
+// Components
 export * from './components';
 
-// Configuration export for consumers who want to extend it
-export { config } from '../../skylight/config';
+// Configuration
+export { skylightConfig as config } from '../../skylight/config';
+export type { Conf as SkylightConfig } from '../../skylight/config';

@@ -1,0 +1,39 @@
+# Skylight v3 - AI Assistant Rules
+
+## Tamagui Development Guidelines
+
+### Always Reference Latest Documentation
+
+Before making any Tamagui-related suggestions:
+
+1. Search https://tamagui.dev/docs for current documentation
+2. Update knowledge of latest best practices
+3. Verify patterns against current standards
+
+### Current Project Status
+
+- **Tamagui Version**: 1.132.23 (latest)
+- **Theme Method**: Direct objects (createTheme is deprecated)
+- **Config Pattern**: createTamagui with proper TypeScript declarations
+- **Last Updated**: [Current Date]
+
+### Key Verification Points
+
+- Theme creation methods
+- Configuration patterns
+- Component patterns
+- Token definitions
+- TypeScript module declarations
+
+### Deprecated Patterns to Avoid
+
+- createTheme() function
+- @tamagui/core module declarations
+- Old component patterns
+
+### Preferred Modern Patterns
+
+- Direct theme objects
+- 'tamagui' module declarations
+- Latest component variants
+- Proper TypeScript types
