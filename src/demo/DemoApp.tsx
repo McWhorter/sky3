@@ -103,7 +103,7 @@ export const DemoApp: React.FC = () => {
                   States
                 </H3>
                 <XStack space="$3" flexWrap="wrap" gap="$2">
-                  <Button size="sm" loading={loading} onClick={handleLoadingDemo}>
+                  <Button size="sm" loading={loading} onPress={handleLoadingDemo}>
                     {loading ? 'Loading...' : 'Click to Load'}
                   </Button>
                   <Button size="sm" disabled>

@@ -2,38 +2,130 @@
 
 ## Tamagui Development Guidelines
 
-### Always Reference Latest Documentation
+### MANDATORY: Always Reference Latest Documentation
 
-Before making any Tamagui-related suggestions:
+**CRITICAL**: Before making ANY Tamagui-related suggestions, you MUST:
 
-1. Search https://tamagui.dev/docs for current documentation
-2. Update knowledge of latest best practices
-3. Verify patterns against current standards
+1. **Search https://tamagui.dev/docs for current documentation**
+2. **Check for latest version updates and breaking changes**
+3. **Verify patterns against current standards (post-April 2024)**
+4. **Use web_search tool to get real-time Tamagui information**
 
-### Current Project Status
+### Current Project Status (VERIFIED 2024)
 
 - **Tamagui Version**: 1.132.23 (latest)
-- **Theme Method**: Direct objects (createTheme is deprecated)
-- **Config Pattern**: createTamagui with proper TypeScript declarations
-- **Last Updated**: [Current Date]
+- **Config Version**: @tamagui/config/v4 (latest)
+- **Theme Method**: createThemes function (v4) OR direct objects
+- **Config Pattern**: createTamagui with v4 defaultConfig
+- **Last Updated**: December 2024
 
-### Key Verification Points
+### ENFORCEMENT RULES
 
-- Theme creation methods
-- Configuration patterns
-- Component patterns
+**If you reference outdated Tamagui patterns, you MUST:**
+
+1. Stop and search for latest documentation
+2. Update your response with current patterns
+3. Explain what changed and why
+
+### Key Verification Points (MANDATORY)
+
+- Theme creation methods (createThemes function available in v4)
+- Configuration patterns and v4 features
+- Component patterns (Button, Spinner, etc.)
 - Token definitions
 - TypeScript module declarations
+- Latest package versions
 
-### Deprecated Patterns to Avoid
+### Deprecated Patterns to Avoid (NEVER USE)
 
-- createTheme() function
-- @tamagui/core module declarations
+- createTheme() function (deprecated)
+- @tamagui/core module declarations (use 'tamagui')
 - Old component patterns
+- Outdated config versions (v3 and below)
+- Custom CSS animations when Tamagui components exist
 
-### Preferred Modern Patterns
+### Preferred Modern Patterns (ALWAYS USE)
 
-- Direct theme objects
+- createThemes function (v4) OR direct theme objects
 - 'tamagui' module declarations
 - Latest component variants
 - Proper TypeScript types
+- @tamagui/config/v4 with defaultConfig
+- Tamagui's built-in components (Spinner, Button, etc.)
+
+### v4 Specific Features (PRIORITIZE)
+
+- defaultConfig provides comprehensive base configuration
+- createThemes function for advanced theme creation
+- Enhanced theme builder capabilities
+- Improved TypeScript support
+- Built-in Spinner component
+- Sub-themes for component-specific styling
+
+### Version Check Commands (ALWAYS SUGGEST)
+
+```bash
+npm view tamagui version
+npm view @tamagui/config version
+npm outdated tamagui @tamagui/config @tamagui/vite-plugin
+```
+
+### MANDATORY DOCUMENTATION LOOKUPS
+
+**CRITICAL**: Before making ANY suggestions related to these technologies, you MUST search for the latest documentation:
+
+#### Tamagui (Primary UI Framework)
+
+- **Official Docs**: https://tamagui.dev/docs
+- **GitHub**: https://github.com/tamagui/tamagui
+- **Releases**: https://github.com/tamagui/tamagui/releases
+- **Discord**: https://discord.gg/4qh6tdcVDa
+- **Search Terms**: "Tamagui latest", "Tamagui v4", "Tamagui Button component", "Tamagui themes"
+
+#### React Native Web
+
+- **Official Docs**: https://necolas.github.io/react-native-web/
+- **GitHub**: https://github.com/necolas/react-native-web
+- **Search Terms**: "React Native Web latest", "React Native Web components", "React Native Web compatibility"
+
+#### React Native
+
+- **Official Docs**: https://reactnative.dev/docs/getting-started
+- **GitHub**: https://github.com/facebook/react-native
+- **Search Terms**: "React Native latest", "React Native components", "React Native best practices"
+
+#### Vite (Build Tool)
+
+- **Official Docs**: https://vitejs.dev/guide/
+- **GitHub**: https://github.com/vitejs/vite
+- **Search Terms**: "Vite latest", "Vite React Native Web", "Vite library build"
+
+#### TypeScript
+
+- **Official Docs**: https://www.typescriptlang.org/docs/
+- **Search Terms**: "TypeScript latest", "TypeScript React Native", "TypeScript library development"
+
+#### General Library Development
+
+- **Search Terms**: "React Native Web UI library", "cross-platform UI components", "React Native Web best practices"
+
+### ENFORCEMENT RULES
+
+**If you reference outdated patterns or lack current information, you MUST:**
+
+1. **STOP** and search for latest documentation using web_search tool
+2. **VERIFY** information is current (post-2024)
+3. **UPDATE** your response with current patterns
+4. **EXPLAIN** what changed and why
+5. **CITE** sources when providing new information
+
+### CRITICAL REMINDERS
+
+- **NEVER** use outdated patterns without checking latest docs
+- **ALWAYS** use web_search for ANY library-related questions
+- **PRIORITIZE** v4 features and patterns for Tamagui
+- **USE** Tamagui's built-in components over custom implementations
+- **VERIFY** context is post-April 2024 before responding
+- **ENSURE** all components work on React Native Web (no HTML elements)
+- **SEARCH** for breaking changes in major version updates
+- **CONFIRM** compatibility between all libraries used
