@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom'
-import { vi } from 'vitest'
+import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 // Mock console methods to avoid noise in tests
 global.console = {
@@ -8,7 +8,7 @@ global.console = {
   // log: vi.fn(),
   // warn: vi.fn(),
   // error: vi.fn(),
-}
+};
 
 // Mock react-native-web specific APIs if needed
 Object.defineProperty(window, 'matchMedia', {
@@ -23,4 +23,4 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});

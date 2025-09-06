@@ -1,153 +1,152 @@
-import React from 'react';
-import { Button as TamaguiButton, styled } from 'tamagui';
-import type { GetProps } from 'tamagui';
+import { getSize } from '@tamagui/get-token';
+import { View, Text, styled, useTheme, withStaticProperties } from '@tamagui/web';
+import { cloneElement, isValidElement, useContext } from 'react';
+import { ButtonContext } from './ButtonContext';
 
-// Extend Tamagui's Button with our custom variants
-const StyledButton = styled(TamaguiButton, {
-  name: 'LibraryButton',
-  
+export const ButtonFrame = styled(View, {
+  name: 'Button',
+  context: ButtonContext,
+  backgroundColor: '$gray1',
+  borderColor: '$gray6',
+  padding: '$2',
+  borderWidth: 1,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  role: 'button',
+  tabIndex: 0,
+
+  hoverStyle: {
+    backgroundColor: '$gray2',
+    borderColor: '$gray7',
+  },
+
+  pressStyle: {
+    backgroundColor: '$gray3',
+  },
+
+  disabledStyle: {
+    opacity: 0.6,
+    cursor: 'not-allowed',
+    pointerEvents: 'none',
+  },
+
   variants: {
     variant: {
       primary: {
-        backgroundColor: '$brand',
-        borderColor: '$brand',
-        color: '$backgroundStrong',
+        backgroundColor: '$blue9',
+        borderColor: '$blue9',
+        color: '$white',
         hoverStyle: {
-          backgroundColor: '$brandHover',
-          borderColor: '$brandHover',
+          backgroundColor: '$blue10',
+          borderColor: '$blue10',
         },
         pressStyle: {
-          backgroundColor: '$brandPress',
-          borderColor: '$brandPress',
-        },
-        focusStyle: {
-          borderColor: '$brandFocus',
+          backgroundColor: '$blue11',
+          borderColor: '$blue11',
         },
       },
       secondary: {
-        backgroundColor: '$neutral500',
-        borderColor: '$neutral500',
-        color: '$backgroundStrong',
+        backgroundColor: '$gray6',
+        borderColor: '$gray6',
+        color: '$gray12',
         hoverStyle: {
-          backgroundColor: '$neutral600',
-          borderColor: '$neutral600',
+          backgroundColor: '$gray7',
+          borderColor: '$gray7',
         },
         pressStyle: {
-          backgroundColor: '$neutral700',
-          borderColor: '$neutral700',
+          backgroundColor: '$gray8',
+          borderColor: '$gray8',
         },
       },
       outline: {
-        backgroundColor: 'transparent',
-        borderColor: '$brand',
-        color: '$brand',
+        backgroundColor: '$transparent',
+        borderColor: '$gray6',
+        color: '$gray12',
         hoverStyle: {
-          backgroundColor: '$brand',
-          color: '$backgroundStrong',
+          backgroundColor: '$gray2',
+          borderColor: '$gray7',
         },
         pressStyle: {
-          backgroundColor: '$brandPress',
-          borderColor: '$brandPress',
-          color: '$backgroundStrong',
-        },
-      },
-      success: {
-        backgroundColor: '$success',
-        borderColor: '$success',
-        color: '$backgroundStrong',
-        hoverStyle: {
-          backgroundColor: '$successHover',
-          borderColor: '$successHover',
-        },
-        pressStyle: {
-          backgroundColor: '$successPress',
-          borderColor: '$successPress',
-        },
-      },
-      warning: {
-        backgroundColor: '$warning',
-        borderColor: '$warning',
-        color: '$backgroundStrong',
-        hoverStyle: {
-          backgroundColor: '$warningHover',
-          borderColor: '$warningHover',
-        },
-        pressStyle: {
-          backgroundColor: '$warningPress',
-          borderColor: '$warningPress',
-        },
-      },
-      error: {
-        backgroundColor: '$error',
-        borderColor: '$error',
-        color: '$backgroundStrong',
-        hoverStyle: {
-          backgroundColor: '$errorHover',
-          borderColor: '$errorHover',
-        },
-        pressStyle: {
-          backgroundColor: '$errorPress',
-          borderColor: '$errorPress',
+          backgroundColor: '$gray3',
         },
       },
     },
-    
     size: {
-      small: {
-        paddingHorizontal: '$lg',
-        paddingVertical: '$sm',
-        fontSize: '$3',
-        minHeight: '$xs',
+      sm: {
+        height: '$sm',
+        gap: '$1',
         borderRadius: '$sm',
+        paddingHorizontal: '$3',
       },
-      medium: {
-        paddingHorizontal: '$xl',
-        paddingVertical: '$md',
-        fontSize: '$4',
-        minHeight: '$md',
+      md: {
+        height: '$md',
+        gap: '$2',
         borderRadius: '$md',
+        paddingHorizontal: '$4',
       },
-      large: {
-        paddingHorizontal: '$2xl',
-        paddingVertical: '$lg',
-        fontSize: '$5',
-        minHeight: '$lg',
+      lg: {
+        height: '$lg',
+        gap: '$2',
         borderRadius: '$lg',
+        paddingHorizontal: '$5',
       },
     },
   } as const,
-  
-  defaultVariants: {
-    variant: 'primary',
-    size: 'medium',
-  },
-})
 
-export interface ButtonProps extends GetProps<typeof StyledButton> {
-  title: string;
-  onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'outline' | 'success' | 'warning' | 'error';
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+export const ButtonText = styled(Text, {
+  name: 'ButtonText',
+  context: ButtonContext,
+  userSelect: 'none',
+  color: '$gray12',
+  fontWeight: '500',
+
+  variants: {
+    size: {
+      sm: {
+        fontSize: '$sm',
+      },
+      md: {
+        fontSize: '$md',
+      },
+      lg: {
+        fontSize: '$lg',
+      },
+    },
+  } as const,
+});
+
+interface ButtonIconProps {
+  children: React.ReactElement;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  title,
-  onPress,
-  variant = 'primary',
-  size = 'medium',
-  disabled = false,
-  ...props
-}) => {
-  return (
-    <StyledButton
-      variant={variant}
-      size={size}
-      disabled={disabled}
-      onPress={onPress}
-      {...props}
-    >
-      {title}
-    </StyledButton>
-  );
+const ButtonIcon = ({ children }: ButtonIconProps) => {
+  const { size, color } = useContext(ButtonContext.context);
+  const smaller = getSize(size, {
+    shift: -2,
+  });
+  const theme = useTheme();
+
+  if (!isValidElement(children)) {
+    return null;
+  }
+
+  const iconProps = {
+    size: smaller.val * 0.5,
+    color: theme[color]?.get() || theme.gray12?.get(),
+  };
+
+  return cloneElement(children, iconProps);
 };
+
+export const Button = withStaticProperties(ButtonFrame, {
+  Props: ButtonContext.Provider,
+  Text: ButtonText,
+  Icon: ButtonIcon,
+});

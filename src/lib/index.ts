@@ -1,7 +1,6 @@
 // Main library entry point
-export * from './components/Button';
-export * from './components/Card';
-export * from './TamaguiProvider';
+export * from './Provider';
+export * from './components';
 
 // Configuration export for consumers who want to extend it
-export { default as defaultTamaguiConfig } from '../../tamagui.config';
+export { config } from '../../skylight/config';

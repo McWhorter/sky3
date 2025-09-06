@@ -1,7 +1,7 @@
-import type { Preview } from '@storybook/react-vite'
-import React from 'react'
-import { TamaguiProvider } from '../src/lib'
-import { YStack } from 'tamagui'
+import type { Preview } from '@storybook/react-vite';
+import React from 'react';
+import { config, Provider } from '../src/lib';
+import { YStack } from 'tamagui';
 
 const preview: Preview = {
   parameters: {
@@ -11,15 +11,15 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    layout: 'centered'
+    layout: 'centered',
   },
   decorators: [
-    (Story) => (
-      <TamaguiProvider>
+    Story => (
+      <Provider config={config}>
         <YStack padding="$4">
           <Story />
         </YStack>
-      </TamaguiProvider>
+      </Provider>
     ),
   ],
 };

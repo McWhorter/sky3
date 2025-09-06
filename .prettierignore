@@ -1,0 +1,8 @@
+dist/
+.aws-sam/
+coverage/
+.nyc_output/
+compiled_tests/
+node_modules/
+cdk.out/
+artifacts/

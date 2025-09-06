@@ -1,17 +1,17 @@
 {
-  "name": "react-native-web-ui-lib",
+  "name": "dcx-skylight",
   "private": false,
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "A React Native Web UI component library",
   "type": "module",
-  "main": "./dist/react-native-web-ui-lib.umd.js",
-  "module": "./dist/react-native-web-ui-lib.es.js",
+  "main": "./dist/dcx-skylight.umd.js",
+  "module": "./dist/dcx-skylight.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/react-native-web-ui-lib.es.js",
-      "require": "./dist/react-native-web-ui-lib.umd.js"
+      "import": "./dist/dcx-skylight.es.js",
+      "require": "./dist/dcx-skylight.umd.js"
     }
   },
   "files": [
@@ -26,10 +26,13 @@
     "prepublishOnly": "npm run build:lib",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest",
-    "test:run": "vitest run",
+    "test": "vitest run",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:staged": "prettier --write"
   },
   "keywords": [
     "react",
@@ -52,6 +55,7 @@
   },
   "dependencies": {
     "@tamagui/config": "^1.132.23",
+    "@tamagui/lucide-icons": "^1.132.23",
     "@tamagui/vite-plugin": "^1.132.23",
     "react-native-svg": "^15.12.1",
     "react-native-vector-icons": "^10.3.0",
@@ -75,6 +79,7 @@
     "eslint-plugin-storybook": "^9.1.4",
     "globals": "^16.3.0",
     "jsdom": "^26.1.0",
+    "prettier": "^3.6.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-native-web": "^0.21.1",
