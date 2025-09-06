@@ -21,6 +21,12 @@ export const lightTheme = {
   borderColorPress: '#6c757d',
   borderColorFocus: '#0d6efd',
 
+  // Outline colors
+  outlineColor: '#dee2e6',
+  outlineColorHover: '#adb5bd',
+  outlineColorPress: '#6c757d',
+  outlineColorFocus: '#0d6efd',
+
   // Shadow colors
   shadowColor: 'rgba(0, 0, 0, 0.1)',
   shadowColorHover: 'rgba(0, 0, 0, 0.15)',
@@ -105,6 +111,12 @@ export const darkTheme = {
   borderColorHover: '#484f58',
   borderColorPress: '#6e7681',
   borderColorFocus: '#1f6feb',
+
+  // Outline colors
+  outlineColor: '#30363d',
+  outlineColorHover: '#484f58',
+  outlineColorPress: '#6e7681',
+  outlineColorFocus: '#1f6feb',
 
   // Shadow colors
   shadowColor: 'rgba(0, 0, 0, 0.3)',

@@ -1,30 +1,24 @@
-import { createTamagui } from '@tamagui/core';
-import { config } from '@tamagui/config/v3';
-import { tokens } from './tokens';
-import { fonts } from './fonts';
-import { themes } from './themes';
+import { createTamagui, createTokens } from '@tamagui/core';
+import { defaultConfig } from '@tamagui/config/v4';
+
+const skylightTokens = createTokens({
+  ...defaultConfig.tokens,
+  size: {
+    ...defaultConfig.tokens.size,
+    $sm: 24,
+    $md: 32,
+    $lg: 40,
+  },
+});
 
 // Create the main Tamagui configuration
-export const skylightConfig = createTamagui({
-  // Use our custom tokens
-  tokens,
+const skylightConfig = createTamagui({
+  ...defaultConfig,
 
-  // Use our custom fonts
-  fonts,
+  tokens: skylightTokens,
 
-  // Use our custom themes
-  themes,
-
-  // Inherit other configurations from the base config
-  media: config.media,
-  animations: config.animations,
-  shorthands: config.shorthands,
-
-  // Custom settings
-  settings: {
-    // Enable theme switching
-    shouldAddPrefersColorThemes: true,
-  },
+  // not sure if we want this all just yet...
+  shorthands: {},
 });
 
 // Export the config as default for compatibility

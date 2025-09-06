@@ -6,5 +6,5 @@ export type { ProviderProps } from './Provider';
 export * from './components';
 
 // Configuration
-export { skylightConfig as config } from '../../skylight/config';
+export { config as config } from '../../skylight/config';
 export type { Conf as SkylightConfig } from '../../skylight/config';

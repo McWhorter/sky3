@@ -11,6 +11,16 @@
 3. **Verify patterns against current standards (post-April 2024)**
 4. **Use web_search tool to get real-time Tamagui information**
 
+### MANDATORY: Reference Actual Project Dependencies
+
+**CRITICAL**: When looking up code solutions, you MUST:
+
+1. **ALWAYS examine the actual Tamagui code imported as dependencies in this project**
+2. **Use read_file tool to inspect node_modules/@tamagui/\* and node_modules/tamagui/\* files for current implementations**
+3. **Reference the exact versions and patterns used in this project's dependencies**
+4. **Verify solutions against the actual imported code, not just documentation**
+5. **Check package.json and node_modules for exact versions being used**
+
 ### Current Project Status (VERIFIED 2024)
 
 - **Tamagui Version**: 1.132.23 (latest)
@@ -129,3 +139,4 @@ npm outdated tamagui @tamagui/config @tamagui/vite-plugin
 - **ENSURE** all components work on React Native Web (no HTML elements)
 - **SEARCH** for breaking changes in major version updates
 - **CONFIRM** compatibility between all libraries used
+- **ALWAYS** reference actual project dependencies when providing solutions

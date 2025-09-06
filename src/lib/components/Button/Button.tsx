@@ -1,269 +1,110 @@
-import React from 'react';
-import { Stack } from 'tamagui';
+import {
+  View,
+  withStaticProperties,
+  SizableText,
+  styled,
+  getFontSize,
+  type FontSizeTokens,
+  useGetThemedIcon,
+  type ColorTokens,
+  type SizeTokens,
+  Text,
+} from 'tamagui';
+import { ButtonContext } from './ButtonContext';
+import { useContext } from 'react';
 
-// Define our custom button variants
-export interface ButtonProps {
-  /**
-   * Size variant of the button
-   * @default 'md'
-   */
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+const ButtonFrame = styled(View, {
+  name: 'Button',
+  tag: 'button',
+  context: ButtonContext,
+  focusable: true,
+  role: 'button',
 
-  /**
-   * Visual variant of the button
-   * @default 'primary'
-   */
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'nowrap',
+  flexDirection: 'row',
+  cursor: 'pointer',
+  gap: '$2',
 
-  /**
-   * Color scheme for the button
-   * @default 'default'
-   */
-  colorScheme?: 'default' | 'success' | 'warning' | 'error' | 'info';
+  variants: {
+    variant: {
+      outlined: {
+        backgroundColor: '$colorTransparent',
+        borderWidth: 2,
+        borderColor: '$borderColor',
 
-  /**
-   * Whether the button should take full width
-   * @default false
-   */
-  fullWidth?: boolean;
+        hoverStyle: {
+          backgroundColor: '$colorTransparent',
+          borderColor: '$borderColorHover',
+        },
 
-  /**
-   * Whether the button is in a loading state
-   * @default false
-   */
-  loading?: boolean;
+        pressStyle: {
+          backgroundColor: '$colorTransparent',
+          borderColor: '$borderColorPress',
+        },
 
-  /**
-   * Whether the button is disabled
-   * @default false
-   */
-  disabled?: boolean;
-
-  /**
-   * Icon to display before the button text
-   */
-  leftIcon?: React.ReactNode;
-
-  /**
-   * Icon to display after the button text
-   */
-  rightIcon?: React.ReactNode;
-
-  /**
-   * Button content
-   */
-  children?: React.ReactNode;
-
-  /**
-   * Click handler
-   */
-  onClick?: () => void;
-
-  /**
-   * Additional props
-   */
-  [key: string]: any;
-}
-
-// Main Button component
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      size = 'md',
-      variant = 'primary',
-      colorScheme = 'default',
-      fullWidth = false,
-      loading = false,
-      disabled = false,
-      leftIcon,
-      rightIcon,
-      children,
-      ...props
+        focusVisibleStyle: {
+          backgroundColor: '$colorTransparent',
+          borderColor: '$borderColorFocus',
+        },
+      },
     },
-    ref
-  ) => {
-    // Get size styles
-    const getSizeStyles = () => {
-      switch (size) {
-        case 'xs':
-          return {
-            height: '$6',
-            paddingHorizontal: '$3',
-            fontSize: '$2',
-            lineHeight: '$2',
-            gap: '$1',
-          };
-        case 'sm':
-          return {
-            height: '$8',
-            paddingHorizontal: '$4',
-            fontSize: '$3',
-            lineHeight: '$3',
-            gap: '$2',
-          };
-        case 'lg':
-          return {
-            height: '$12',
-            paddingHorizontal: '$6',
-            fontSize: '$4',
-            lineHeight: '$4',
-            gap: '$3',
-          };
-        case 'xl':
-          return {
-            height: '$14',
-            paddingHorizontal: '$8',
-            fontSize: '$5',
-            lineHeight: '$5',
-            gap: '$3',
-          };
-        default: // md
-          return {
-            height: '$10',
-            paddingHorizontal: '$5',
-            fontSize: '$3',
-            lineHeight: '$3',
-            gap: '$2',
-          };
-      }
-    };
 
-    // Get variant styles
-    const getVariantStyles = () => {
-      switch (variant) {
-        case 'outline':
-          return {
-            backgroundColor: 'transparent',
-            borderColor: '$primary',
-            color: '$primary',
-          };
-        case 'ghost':
-          return {
-            backgroundColor: 'transparent',
-            borderColor: 'transparent',
-            color: '$primary',
-          };
-        case 'link':
-          return {
-            backgroundColor: 'transparent',
-            borderColor: 'transparent',
-            color: '$primary',
-            textDecoration: 'underline',
-            height: 'auto',
-            paddingHorizontal: 0,
-            paddingVertical: 0,
-          };
-        case 'secondary':
-          return {
-            backgroundColor: '$secondary',
-            borderColor: '$secondary',
-            color: '$background',
-          };
-        default: // primary
-          return {
-            backgroundColor: '$primary',
-            borderColor: '$primary',
-            color: '$background',
-          };
-      }
-    };
+    size: {
+      $sm: {
+        paddingVertical: '$1',
+        paddingHorizontal: '$2',
+      },
+      $md: {
+        paddingVertical: '$2',
+        paddingHorizontal: '$3',
+      },
+      $lg: {
+        paddingVertical: '$3',
+        paddingHorizontal: '$4',
+      },
+    },
 
-    // Get color scheme styles
-    const getColorSchemeStyles = () => {
-      if (colorScheme === 'default') return {};
+    disabled: {
+      true: {
+        pointerEvents: 'none',
+      },
+    },
+  } as const,
 
-      switch (colorScheme) {
-        case 'success':
-          return {
-            backgroundColor: '$success',
-            borderColor: '$success',
-            color: '$background',
-          };
-        case 'warning':
-          return {
-            backgroundColor: '$warning',
-            borderColor: '$warning',
-            color: '$background',
-          };
-        case 'error':
-          return {
-            backgroundColor: '$error',
-            borderColor: '$error',
-            color: '$background',
-          };
-        case 'info':
-          return {
-            backgroundColor: '$info',
-            borderColor: '$info',
-            color: '$background',
-          };
-        default:
-          return {};
-      }
-    };
+  defaultVariants: {
+    size: '$md',
+  },
+});
 
-    const sizeStyles = getSizeStyles();
-    const variantStyles = getVariantStyles();
-    const colorSchemeStyles = getColorSchemeStyles();
+const ButtonText = styled(Text, {
+  name: 'ButtonText',
+  context: ButtonContext,
+  color: '$color',
 
-    return (
-      <Stack
-        ref={ref}
-        disabled={disabled || loading}
-        borderRadius="$4"
-        borderWidth={1}
-        cursor="pointer"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        fontFamily="$body"
-        fontWeight="$4"
-        transition="all 0.2s ease"
-        userSelect="none"
-        flexDirection="row"
-        width={fullWidth ? '100%' : undefined}
-        opacity={loading ? 0.7 : undefined}
-        pointerEvents={loading ? 'none' : undefined}
-        {...sizeStyles}
-        {...variantStyles}
-        {...colorSchemeStyles}
-        {...props}
-      >
-        {loading && (
-          <div
-            style={{
-              width: '1em',
-              height: '1em',
-              border: '2px solid currentColor',
-              borderTop: '2px solid transparent',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-              marginRight: leftIcon || children ? '0.5em' : 0,
-            }}
-          />
-        )}
-        {!loading && leftIcon && (
-          <span style={{ marginRight: children ? '0.5em' : 0 }}>{leftIcon}</span>
-        )}
-        {children}
-        {!loading && rightIcon && (
-          <span style={{ marginLeft: children ? '0.5em' : 0 }}>{rightIcon}</span>
-        )}
-      </Stack>
-    );
-  }
-);
+  variants: {
+    size: {
+      '...fontSize': (name, { font }) => ({
+        fontSize: font?.size[name],
+      }),
+    },
+  } as const,
+});
 
-Button.displayName = 'Button';
+const ButtonIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
+  const { children, scaleIcon = 1 } = props;
+  const { size, color } = useContext(ButtonContext);
 
-// Add CSS animation for loading spinner
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  `;
-  document.head.appendChild(style);
-}
+  const iconSize =
+    (typeof size === 'number' ? size * 0.5 : getFontSize(size as FontSizeTokens)) * scaleIcon;
+
+  const getThemedIcon = useGetThemedIcon({ size: iconSize, color: color as ColorTokens });
+  return getThemedIcon(children);
+};
+
+export const Button = withStaticProperties(ButtonFrame, {
+  Props: ButtonContext.Provider,
+  Text: ButtonText,
+  Icon: ButtonIcon,
+});
