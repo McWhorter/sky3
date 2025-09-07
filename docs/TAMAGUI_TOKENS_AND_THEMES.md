@@ -682,9 +682,9 @@ const customThemes = createThemes({
 Component themes are automatically applied when a component has a `name` property:
 
 ```typescript
-import { styled } from 'tamagui';
+import { styled, Button } from 'tamagui';
 
-const CustomButton = styled('button', {
+const CustomButton = styled(Button, {
   name: 'CustomButton', // This enables component-specific theming
   backgroundColor: '$background',
   color: '$color',
@@ -974,10 +974,10 @@ const customFonts = {
 Now you can use your custom size tokens in components:
 
 ```typescript
-import { styled } from 'tamagui';
+import { styled, Button, Text } from 'tamagui';
 
 // Button with custom size variants
-const CustomButton = styled('button', {
+const CustomButton = styled(Button, {
   name: 'CustomButton',
   variants: {
     size: {
@@ -1014,7 +1014,7 @@ const CustomButton = styled('button', {
 });
 
 // Text component with custom sizes
-const CustomText = styled('span', {
+const CustomText = styled(Text, {
   name: 'CustomText',
   fontFamily: '$body',
   variants: {
@@ -1035,10 +1035,12 @@ const CustomText = styled('span', {
 ### 4. Usage Examples
 
 ```typescript
+import { View } from 'tamagui';
+
 // Using the custom components
 function App() {
   return (
-    <div>
+    <View>
       {/* Buttons with custom sizes */}
       <CustomButton size="xs">Extra Small Button</CustomButton>
       <CustomButton size="sm">Small Button</CustomButton>
@@ -1061,7 +1063,7 @@ function App() {
       <Text size="$sm">Small Text</Text>
       <Text size="$md">Medium Text</Text>
       <Text size="$lg">Large Text</Text>
-    </div>
+    </View>
   )
 }
 ```
@@ -1071,8 +1073,10 @@ function App() {
 If you're still having font size issues, add debugging:
 
 ```typescript
+import { styled, Text } from 'tamagui';
+
 // Add this to your component to debug font sizing
-const DebugText = styled('span', {
+const DebugText = styled(Text, {
   name: 'DebugText',
   fontFamily: '$body',
   variants: {
@@ -1110,13 +1114,12 @@ Tamagui components automatically inherit theme values through:
 #### Basic Theme-Aware Component
 
 ```typescript
-import { styled } from 'tamagui';
+import { styled, View } from 'tamagui';
 
 // Basic theme-aware component
-const CustomCard = styled('div', {
+const CustomCard = styled(View, {
   name: 'CustomCard', // Important: This enables component-specific theming
   backgroundColor: '$background', // Uses theme background
-  color: '$color', // Uses theme text color
   borderColor: '$borderColor', // Uses theme border color
   borderWidth: 1,
   borderRadius: '$4',
@@ -1146,38 +1149,33 @@ const CustomCard = styled('div', {
 #### Advanced Theme-Aware Component with Variants
 
 ```typescript
-import { styled } from 'tamagui';
+import { styled, Button } from 'tamagui';
 
-const CustomButton = styled('button', {
+const CustomButton = styled(Button, {
   name: 'CustomButton',
 
   // Base theme-aware styles
   backgroundColor: '$background',
-  color: '$color',
   borderColor: '$borderColor',
   borderWidth: 1,
   borderRadius: '$4',
   paddingHorizontal: '$4',
   paddingVertical: '$3',
-  cursor: 'pointer',
 
   // Interactive states
   hoverStyle: {
     backgroundColor: '$backgroundHover',
     borderColor: '$borderColorHover',
-    color: '$colorHover',
   },
 
   pressStyle: {
     backgroundColor: '$backgroundPress',
     borderColor: '$borderColorPress',
-    color: '$colorPress',
   },
 
   focusStyle: {
     backgroundColor: '$backgroundFocus',
     borderColor: '$borderColorFocus',
-    color: '$colorFocus',
     outlineColor: '$outlineColor',
     outlineWidth: 2,
     outlineStyle: 'solid',
@@ -1209,7 +1207,6 @@ const CustomButton = styled('button', {
     variant: {
       primary: {
         backgroundColor: '$blue9',
-        color: '$blue1',
         borderColor: '$blue9',
 
         hoverStyle: {
@@ -1225,7 +1222,6 @@ const CustomButton = styled('button', {
 
       secondary: {
         backgroundColor: '$gray3',
-        color: '$gray11',
         borderColor: '$gray6',
 
         hoverStyle: {
@@ -1241,7 +1237,6 @@ const CustomButton = styled('button', {
 
       outline: {
         backgroundColor: 'transparent',
-        color: '$color',
         borderColor: '$borderColor',
 
         hoverStyle: {
@@ -1259,7 +1254,6 @@ const CustomButton = styled('button', {
     disabled: {
       true: {
         opacity: 0.5,
-        cursor: 'not-allowed',
         pointerEvents: 'none',
       },
     },
@@ -1318,9 +1312,11 @@ This creates themes like:
 #### Using Theme-Aware Components
 
 ```typescript
+import { View, Theme } from 'tamagui';
+
 function App() {
   return (
-    <div>
+    <View>
       {/* Basic theme application */}
       <Theme name="light">
         <CustomCard>Light themed card</CustomCard>
@@ -1353,7 +1349,7 @@ function App() {
         <CustomButton size="md" variant="primary">Medium primary button</CustomButton>
         <CustomButton size="lg" variant="secondary">Large secondary button</CustomButton>
       </Theme>
-    </div>
+    </View>
   )
 }
 ```
@@ -1363,7 +1359,7 @@ function App() {
 For more complex theming scenarios, you can use Tamagui's context system:
 
 ```typescript
-import { createStyledContext, styled } from 'tamagui'
+import { createStyledContext, styled, View } from 'tamagui'
 
 // Create a context for your component
 const CustomComponentContext = createStyledContext<{
@@ -1376,13 +1372,12 @@ const CustomComponentContext = createStyledContext<{
   theme: 'light',
 })
 
-const CustomComponent = styled('div', {
+const CustomComponent = styled(View, {
   name: 'CustomComponent',
   context: CustomComponentContext,
 
   // Base styles
   backgroundColor: '$background',
-  color: '$color',
   borderColor: '$borderColor',
   borderWidth: 1,
   borderRadius: '$4',
@@ -1393,17 +1388,14 @@ const CustomComponent = styled('div', {
     variant: {
       primary: {
         backgroundColor: '$blue9',
-        color: '$blue1',
         borderColor: '$blue9',
       },
       secondary: {
         backgroundColor: '$gray3',
-        color: '$gray11',
         borderColor: '$gray6',
       },
       tertiary: {
         backgroundColor: 'transparent',
-        color: '$color',
         borderColor: '$borderColor',
       },
     },
@@ -1448,12 +1440,11 @@ function App() {
 For text components that need to respond to themes:
 
 ```typescript
-import { styled } from 'tamagui';
+import { styled, Text } from 'tamagui';
 
-const CustomText = styled('span', {
+const CustomText = styled(Text, {
   name: 'CustomText',
   fontFamily: '$body',
-  color: '$color',
 
   variants: {
     size: {
@@ -1473,11 +1464,9 @@ const CustomText = styled('span', {
 
     variant: {
       body: {
-        color: '$color',
         fontFamily: '$body',
       },
       heading: {
-        color: '$color',
         fontFamily: '$heading',
         fontWeight: '600',
       },
@@ -1518,13 +1507,14 @@ const CustomText = styled('span', {
 6. **Test with different themes**: Ensure your components work with all theme combinations
 
 ```typescript
+import { styled, View } from 'tamagui';
+
 // Example of a well-structured theme-aware component
-const WellStructuredComponent = styled('div', {
+const WellStructuredComponent = styled(View, {
   name: 'WellStructuredComponent', // ✅ Enables component theming
 
   // ✅ Use theme tokens
   backgroundColor: '$background',
-  color: '$color',
   borderColor: '$borderColor',
   borderWidth: 1,
   borderRadius: '$4',
@@ -1560,12 +1550,10 @@ const WellStructuredComponent = styled('div', {
     variant: {
       primary: {
         backgroundColor: '$blue9',
-        color: '$blue1',
         borderColor: '$blue9',
       },
       secondary: {
         backgroundColor: '$gray3',
-        color: '$gray11',
         borderColor: '$gray6',
       },
     },
@@ -1621,8 +1609,10 @@ const themes = createThemes({
 ### 3. Component Usage Examples
 
 ```typescript
+import { styled, View, Theme } from 'tamagui';
+
 // Using tokens in components
-const CustomCard = styled('div', {
+const CustomCard = styled(View, {
   padding: '$4',        // Uses space token
   borderRadius: '$3',   // Uses radius token
   backgroundColor: '$background',
@@ -1649,21 +1639,20 @@ const CustomCard = styled('div', {
 ### 4. Dynamic Theme Access
 
 ```typescript
-import { useTheme } from 'tamagui'
+import { useTheme, View } from 'tamagui'
 
 function ThemedComponent() {
   const theme = useTheme()
 
   return (
-    <div
+    <View
       style={{
         backgroundColor: theme.background.val,
-        color: theme.color.val,
         borderColor: theme.borderColor.val,
       }}
     >
       Dynamic themed content
-    </div>
+    </View>
   )
 }
 ```
@@ -1671,9 +1660,9 @@ function ThemedComponent() {
 ### 5. Responsive Theming
 
 ```typescript
-import { styled } from 'tamagui';
+import { styled, View } from 'tamagui';
 
-const ResponsiveCard = styled('div', {
+const ResponsiveCard = styled(View, {
   padding: '$3',
   borderRadius: '$2',
   backgroundColor: '$background',
