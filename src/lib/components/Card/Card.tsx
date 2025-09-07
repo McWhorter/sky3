@@ -33,17 +33,17 @@ const CardFrame = styled(View, {
 
   variants: {
     size: {
-      $sm: {
+      sm: {
         padding: '$2',
         borderRadius: '$2',
         gap: '$2',
       },
-      $md: {
+      md: {
         padding: '$4',
         borderRadius: '$4',
         gap: '$3',
       },
-      $lg: {
+      lg: {
         padding: '$6',
         borderRadius: '$6',
         gap: '$4',
@@ -120,13 +120,13 @@ const CardTitle = styled(Text, {
 
   variants: {
     size: {
-      $sm: {
+      sm: {
         fontSize: '$4',
       },
-      $md: {
+      md: {
         fontSize: '$5',
       },
-      $lg: {
+      lg: {
         fontSize: '$6',
       },
     },
@@ -146,15 +146,15 @@ const CardDescription = styled(Text, {
 
   variants: {
     size: {
-      $sm: {
+      sm: {
         fontSize: '$3',
         lineHeight: '$3',
       },
-      $md: {
+      md: {
         fontSize: '$4',
         lineHeight: '$4',
       },
-      $lg: {
+      lg: {
         fontSize: '$5',
         lineHeight: '$5',
       },

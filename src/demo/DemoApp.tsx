@@ -27,104 +27,19 @@ export const DemoApp: React.FC = () => {
 
           <TamaguiCard background="transparent">
             <YStack gap="$4">
-              <H2>Button Variants</H2>
-              <YStack gap="$4">
-                <H3>Button Components</H3>
-                <YStack gap="$4">
-                  <H3>Filled Buttons</H3>
-
-                  <YStack gap="$2">
-                    <Button size="$sm">
-                      <Button.Text>$1 Filled</Button.Text>
-                    </Button>
-                    <Button size="$md">
-                      <Button.Text>$2 Filled</Button.Text>
-                    </Button>
-                    <Button size="$lg">
-                      <Button.Text>$3 Filled</Button.Text>
-                    </Button>
-                  </YStack>
-
-                  <H3>Outlined Buttons</H3>
-
-                  <YStack gap="$2">
-                    <Button size="$sm" variant="outlined">
-                      <Button.Text>$1 Outlined</Button.Text>
-                      <Button.Icon>
-                        <Airplay />
-                      </Button.Icon>
-                    </Button>
-                    <Button size="$md" variant="outlined">
-                      <Button.Text>$2 Outlined</Button.Text>
-                      <Button.Icon>
-                        <Airplay />
-                      </Button.Icon>
-                    </Button>
-                    <Button size="$lg" variant="outlined">
-                      <Button.Text>$3 Outlined</Button.Text>
-                      <Button.Icon>
-                        <Airplay />
-                      </Button.Icon>
-                    </Button>
-                  </YStack>
-                </YStack>
-              </YStack>
-            </YStack>
-          </TamaguiCard>
-
-          <Separator />
-
-          <TamaguiCard background="transparent">
-            <YStack gap="$4">
               <H2>Custom Card Component</H2>
               <Text>
                 A custom card component built using the documentation's recommended approach:
-                standard tokens with semantic variant names and component-specific theming.
+                semantic variant names (sm, md, lg) that map to standard Tamagui tokens, avoiding
+                the need for custom font configurations.
               </Text>
 
               <YStack gap="$4">
                 <H3>Size Variants</H3>
-                <YStack gap="$3">
-                  <Card size="$sm">
-                    <Card.Header>
-                      <Card.Title>Small Card</Card.Title>
-                    </Card.Header>
-                    <Card.Content>
-                      <Card.Description>
-                        This is a small card using size variant "$sm" with standard tokens ($2
-                        padding, $2 border radius).
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-
-                  <Card size="$md">
-                    <Card.Header>
-                      <Card.Title>Medium Card</Card.Title>
-                    </Card.Header>
-                    <Card.Content>
-                      <Card.Description>
-                        This is a medium card using size variant "$md" with standard tokens ($4
-                        padding, $4 border radius).
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-
-                  <Card size="$lg">
-                    <Card.Header>
-                      <Card.Title>Large Card</Card.Title>
-                    </Card.Header>
-                    <Card.Content>
-                      <Card.Description>
-                        This is a large card using size variant "$lg" with standard tokens ($6
-                        padding, $6 border radius).
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-                </YStack>
 
                 <H3>Variant Types</H3>
                 <YStack gap="$3">
-                  <Card variant="default" size="$md">
+                  <Card variant="default" size="md">
                     <Card.Header>
                       <Card.Title>Default Card</Card.Title>
                     </Card.Header>
@@ -135,7 +50,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Content>
                   </Card>
 
-                  <Card variant="elevated" size="$md">
+                  <Card variant="elevated" size="md">
                     <Card.Header>
                       <Card.Title>Elevated Card</Card.Title>
                     </Card.Header>
@@ -146,7 +61,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Content>
                   </Card>
 
-                  <Card variant="outlined" size="$md">
+                  <Card variant="outlined" size="md">
                     <Card.Header>
                       <Card.Title>Outlined Card</Card.Title>
                     </Card.Header>
@@ -157,7 +72,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Content>
                   </Card>
 
-                  <Card variant="filled" size="$md">
+                  <Card variant="filled" size="md">
                     <Card.Header>
                       <Card.Title>Filled Card</Card.Title>
                     </Card.Header>
@@ -168,7 +83,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Content>
                   </Card>
 
-                  <Card variant="success" size="$md">
+                  <Card variant="success" size="md">
                     <Card.Header>
                       <Card.Title>Success Card</Card.Title>
                     </Card.Header>
@@ -179,7 +94,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Content>
                   </Card>
 
-                  <Card variant="warning" size="$md">
+                  <Card variant="warning" size="md">
                     <Card.Header>
                       <Card.Title>Warning Card</Card.Title>
                     </Card.Header>
@@ -190,7 +105,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Content>
                   </Card>
 
-                  <Card variant="error" size="$md">
+                  <Card variant="error" size="md">
                     <Card.Header>
                       <Card.Title>Error Card</Card.Title>
                     </Card.Header>
@@ -204,7 +119,7 @@ export const DemoApp: React.FC = () => {
 
                 <H3>Interactive Cards</H3>
                 <YStack gap="$3">
-                  <Card variant="elevated" size="$md" interactive>
+                  <Card variant="elevated" size="md" interactive>
                     <Card.Header>
                       <Card.Title>Interactive Card</Card.Title>
                     </Card.Header>
@@ -220,7 +135,7 @@ export const DemoApp: React.FC = () => {
                     </Card.Footer>
                   </Card>
 
-                  <Card variant="filled" size="$md" interactive>
+                  <Card variant="filled" size="md" interactive>
                     <Card.Header>
                       <Card.Title>Card with Footer</Card.Title>
                     </Card.Header>
