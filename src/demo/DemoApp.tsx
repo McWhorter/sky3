@@ -5,8 +5,6 @@ import { Card } from '@/components/Card';
 // import { Button } from 'tamagui';
 import { Provider } from '@/Provider';
 
-import { Airplay } from '@tamagui/lucide-icons';
-
 // Note: TypeScript errors for 'size', 'variant', and 'interactive' props are expected
 // as custom component variant types aren't fully inferred, but the component works at runtime
 
@@ -27,6 +25,15 @@ export const DemoApp: React.FC = () => {
 
           <TamaguiCard background="transparent">
             <YStack gap="$4">
+              <H2>Custom Button Component</H2>
+              <YStack gap="$3">
+                <Button size="sm">Small Button</Button>
+                <Button size="md">Medium Button</Button>
+                <Button size="lg">Large Button</Button>
+              </YStack>
+
+              <Separator />
+
               <H2>Custom Card Component</H2>
               <Text>
                 A custom card component built using the documentation's recommended approach:
@@ -35,8 +42,6 @@ export const DemoApp: React.FC = () => {
               </Text>
 
               <YStack gap="$4">
-                <H3>Size Variants</H3>
-
                 <H3>Variant Types</H3>
                 <YStack gap="$3">
                   <Card variant="default" size="md">

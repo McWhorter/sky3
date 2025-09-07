@@ -14,13 +14,11 @@ const CardFrame = styled(View, {
   hoverStyle: {
     backgroundColor: '$backgroundHover',
     borderColor: '$borderColorHover',
-    transform: [{ scale: 1.02 }],
   },
 
   pressStyle: {
     backgroundColor: '$backgroundPress',
     borderColor: '$borderColorPress',
-    transform: [{ scale: 0.98 }],
   },
 
   focusStyle: {

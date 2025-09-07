@@ -1,13 +1,11 @@
 import {
   View,
   withStaticProperties,
-  SizableText,
   styled,
   getFontSize,
   type FontSizeTokens,
   useGetThemedIcon,
   type ColorTokens,
-  type SizeTokens,
   Text,
 } from 'tamagui';
 import { ButtonContext } from './ButtonContext';
@@ -52,15 +50,15 @@ const ButtonFrame = styled(View, {
     },
 
     size: {
-      $sm: {
+      sm: {
         paddingVertical: '$1',
         paddingHorizontal: '$2',
       },
-      $md: {
+      md: {
         paddingVertical: '$2',
         paddingHorizontal: '$3',
       },
-      $lg: {
+      lg: {
         paddingVertical: '$3',
         paddingHorizontal: '$4',
       },
@@ -74,7 +72,8 @@ const ButtonFrame = styled(View, {
   } as const,
 
   defaultVariants: {
-    size: '$md',
+    size: 'md',
+    variant: 'outlined',
   },
 });
 
