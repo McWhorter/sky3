@@ -636,6 +636,752 @@ const badTokens = createTokens({
 });
 ```
 
+### 2. Critical: Custom Size Tokens and Font Sizing
+
+**IMPORTANT**: When adding custom size tokens, you MUST also configure font sizes to match. This is a common source of issues where fontSize doesn't work with custom tokens.
+
+#### The Problem
+
+When you add custom size tokens like `$sm`, `$md`, etc., Tamagui's font system doesn't automatically know how to map these to font sizes. The `getFontSized` function looks for font size mappings in the font configuration.
+
+#### The Solution: Complete Token + Font Configuration
+
+```typescript
+import { createTamagui } from '@tamagui/core';
+import { createTokens } from '@tamagui/core';
+import { createSystemFont } from '@tamagui/config';
+import { defaultConfig } from '@tamagui/config/v4';
+
+// 1. Create custom tokens with your size system
+const customTokens = createTokens({
+  ...defaultConfig.tokens,
+  size: {
+    ...defaultConfig.tokens.size,
+    // Add your custom sizes
+    $xs: 12, // Extra small
+    $sm: 16, // Small
+    $md: 24, // Medium
+    $lg: 32, // Large
+    $xl: 48, // Extra large
+  },
+  space: {
+    ...defaultConfig.tokens.space,
+    // Add corresponding spacing
+    $xs: 6, // Extra small spacing
+    $sm: 12, // Small spacing
+    $md: 18, // Medium spacing
+    $lg: 24, // Large spacing
+    $xl: 36, // Extra large spacing
+  },
+});
+
+// 2. Create custom fonts that map to your size tokens
+const customFonts = {
+  body: createSystemFont({
+    font: {
+      // CRITICAL: Map your custom size tokens to actual font sizes
+      size: {
+        // Keep existing sizes
+        ...defaultConfig.fonts.body.size,
+        // Add your custom size mappings
+        $xs: 10, // 10px font for $xs size
+        $sm: 12, // 12px font for $sm size
+        $md: 14, // 14px font for $md size
+        $lg: 16, // 16px font for $lg size
+        $xl: 18, // 18px font for $xl size
+      },
+      // Optional: Custom line heights for your sizes
+      lineHeight: {
+        ...defaultConfig.fonts.body.lineHeight,
+        $xs: 14, // Line height for $xs
+        $sm: 16, // Line height for $sm
+        $md: 20, // Line height for $md
+        $lg: 24, // Line height for $lg
+        $xl: 28, // Line height for $xl
+      },
+    },
+  }),
+  heading: createSystemFont({
+    font: {
+      // Same mapping for heading font
+      size: {
+        ...defaultConfig.fonts.heading.size,
+        $xs: 12, // Larger font sizes for headings
+        $sm: 16,
+        $md: 20,
+        $lg: 24,
+        $xl: 28,
+      },
+      lineHeight: {
+        ...defaultConfig.fonts.heading.lineHeight,
+        $xs: 16,
+        $sm: 20,
+        $md: 24,
+        $lg: 28,
+        $xl: 32,
+      },
+    },
+  }),
+};
+
+// 3. Create the complete configuration
+const config = createTamagui({
+  ...defaultConfig,
+  tokens: customTokens,
+  fonts: customFonts,
+});
+```
+
+#### Alternative: Extend Existing Font Sizes
+
+If you prefer to extend the existing font size system:
+
+```typescript
+import { createSystemFont } from '@tamagui/config';
+
+const customFonts = {
+  body: createSystemFont({
+    font: {
+      size: {
+        // Extend the default sizes with your custom ones
+        1: 11, // Keep existing
+        2: 12, // Keep existing
+        3: 13, // Keep existing
+        4: 14, // Keep existing
+        true: 14, // Keep existing
+        5: 16, // Keep existing
+        6: 18, // Keep existing
+        7: 20, // Keep existing
+        8: 23, // Keep existing
+        9: 30, // Keep existing
+        10: 46, // Keep existing
+        11: 55, // Keep existing
+        12: 62, // Keep existing
+        13: 72, // Keep existing
+        14: 92, // Keep existing
+        15: 114, // Keep existing
+        16: 134, // Keep existing
+        // Add your custom sizes
+        $xs: 10,
+        $sm: 12,
+        $md: 14,
+        $lg: 16,
+        $xl: 18,
+      },
+    },
+  }),
+};
+```
+
+### 3. Component Usage with Custom Size Tokens
+
+Now you can use your custom size tokens in components:
+
+```typescript
+import { styled } from 'tamagui';
+
+// Button with custom size variants
+const CustomButton = styled('button', {
+  name: 'CustomButton',
+  variants: {
+    size: {
+      xs: {
+        height: '$xs',
+        paddingHorizontal: '$xs',
+        fontSize: '$xs', // This will now work!
+      },
+      sm: {
+        height: '$sm',
+        paddingHorizontal: '$sm',
+        fontSize: '$sm', // This will now work!
+      },
+      md: {
+        height: '$md',
+        paddingHorizontal: '$md',
+        fontSize: '$md', // This will now work!
+      },
+      lg: {
+        height: '$lg',
+        paddingHorizontal: '$lg',
+        fontSize: '$lg', // This will now work!
+      },
+      xl: {
+        height: '$xl',
+        paddingHorizontal: '$xl',
+        fontSize: '$xl', // This will now work!
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+// Text component with custom sizes
+const CustomText = styled('span', {
+  name: 'CustomText',
+  fontFamily: '$body',
+  variants: {
+    size: {
+      xs: { fontSize: '$xs' }, // Works with proper font config
+      sm: { fontSize: '$sm' }, // Works with proper font config
+      md: { fontSize: '$md' }, // Works with proper font config
+      lg: { fontSize: '$lg' }, // Works with proper font config
+      xl: { fontSize: '$xl' }, // Works with proper font config
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+```
+
+### 4. Usage Examples
+
+```typescript
+// Using the custom components
+function App() {
+  return (
+    <div>
+      {/* Buttons with custom sizes */}
+      <CustomButton size="xs">Extra Small Button</CustomButton>
+      <CustomButton size="sm">Small Button</CustomButton>
+      <CustomButton size="md">Medium Button</CustomButton>
+      <CustomButton size="lg">Large Button</CustomButton>
+      <CustomButton size="xl">Extra Large Button</CustomButton>
+
+      {/* Text with custom sizes */}
+      <CustomText size="xs">Extra small text</CustomText>
+      <CustomText size="sm">Small text</CustomText>
+      <CustomText size="md">Medium text</CustomText>
+      <CustomText size="lg">Large text</CustomText>
+      <CustomText size="xl">Extra large text</CustomText>
+
+      {/* Using Tamagui's built-in components with custom tokens */}
+      <Button size="$sm">Small Button</Button>
+      <Button size="$md">Medium Button</Button>
+      <Button size="$lg">Large Button</Button>
+
+      <Text size="$sm">Small Text</Text>
+      <Text size="$md">Medium Text</Text>
+      <Text size="$lg">Large Text</Text>
+    </div>
+  )
+}
+```
+
+### 5. Debugging Font Size Issues
+
+If you're still having font size issues, add debugging:
+
+```typescript
+// Add this to your component to debug font sizing
+const DebugText = styled('span', {
+  name: 'DebugText',
+  fontFamily: '$body',
+  variants: {
+    size: {
+      '...fontSize': (size, extras) => {
+        // Debug logging
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Font size debug:', {
+            size,
+            font: extras.font,
+            tokens: extras.tokens,
+            fontSize: extras.font?.size?.[size],
+          });
+        }
+        return { fontSize: size };
+      },
+    },
+  },
+});
+```
+
+### 6. Applying Themes to Custom Components
+
+One of the most powerful features of Tamagui is how themes are automatically applied to components. Here's how to make your custom components work seamlessly with the theme system, just like Tamagui's built-in components.
+
+#### Understanding Theme Application
+
+Tamagui components automatically inherit theme values through:
+
+1. **Theme Context**: Components automatically receive theme values from parent `Theme` components
+2. **Token References**: Using `$` prefixed values (e.g., `$background`, `$color`)
+3. **Theme Variants**: Automatic theme switching based on theme names
+4. **Component-Specific Themes**: Themes that target specific component names
+
+#### Basic Theme-Aware Component
+
+```typescript
+import { styled } from 'tamagui';
+
+// Basic theme-aware component
+const CustomCard = styled('div', {
+  name: 'CustomCard', // Important: This enables component-specific theming
+  backgroundColor: '$background', // Uses theme background
+  color: '$color', // Uses theme text color
+  borderColor: '$borderColor', // Uses theme border color
+  borderWidth: 1,
+  borderRadius: '$4',
+  padding: '$4',
+
+  // Interactive states that respond to theme
+  hoverStyle: {
+    backgroundColor: '$backgroundHover',
+    borderColor: '$borderColorHover',
+  },
+
+  pressStyle: {
+    backgroundColor: '$backgroundPress',
+    borderColor: '$borderColorPress',
+  },
+
+  focusStyle: {
+    backgroundColor: '$backgroundFocus',
+    borderColor: '$borderColorFocus',
+    outlineColor: '$outlineColor',
+    outlineWidth: 2,
+    outlineStyle: 'solid',
+  },
+});
+```
+
+#### Advanced Theme-Aware Component with Variants
+
+```typescript
+import { styled } from 'tamagui';
+
+const CustomButton = styled('button', {
+  name: 'CustomButton',
+
+  // Base theme-aware styles
+  backgroundColor: '$background',
+  color: '$color',
+  borderColor: '$borderColor',
+  borderWidth: 1,
+  borderRadius: '$4',
+  paddingHorizontal: '$4',
+  paddingVertical: '$3',
+  cursor: 'pointer',
+
+  // Interactive states
+  hoverStyle: {
+    backgroundColor: '$backgroundHover',
+    borderColor: '$borderColorHover',
+    color: '$colorHover',
+  },
+
+  pressStyle: {
+    backgroundColor: '$backgroundPress',
+    borderColor: '$borderColorPress',
+    color: '$colorPress',
+  },
+
+  focusStyle: {
+    backgroundColor: '$backgroundFocus',
+    borderColor: '$borderColorFocus',
+    color: '$colorFocus',
+    outlineColor: '$outlineColor',
+    outlineWidth: 2,
+    outlineStyle: 'solid',
+  },
+
+  // Size variants that work with themes
+  variants: {
+    size: {
+      sm: {
+        paddingHorizontal: '$2',
+        paddingVertical: '$2',
+        fontSize: '$sm',
+        borderRadius: '$2',
+      },
+      md: {
+        paddingHorizontal: '$4',
+        paddingVertical: '$3',
+        fontSize: '$md',
+        borderRadius: '$4',
+      },
+      lg: {
+        paddingHorizontal: '$6',
+        paddingVertical: '$4',
+        fontSize: '$lg',
+        borderRadius: '$6',
+      },
+    },
+
+    variant: {
+      primary: {
+        backgroundColor: '$blue9',
+        color: '$blue1',
+        borderColor: '$blue9',
+
+        hoverStyle: {
+          backgroundColor: '$blue10',
+          borderColor: '$blue10',
+        },
+
+        pressStyle: {
+          backgroundColor: '$blue11',
+          borderColor: '$blue11',
+        },
+      },
+
+      secondary: {
+        backgroundColor: '$gray3',
+        color: '$gray11',
+        borderColor: '$gray6',
+
+        hoverStyle: {
+          backgroundColor: '$gray4',
+          borderColor: '$gray7',
+        },
+
+        pressStyle: {
+          backgroundColor: '$gray5',
+          borderColor: '$gray8',
+        },
+      },
+
+      outline: {
+        backgroundColor: 'transparent',
+        color: '$color',
+        borderColor: '$borderColor',
+
+        hoverStyle: {
+          backgroundColor: '$backgroundHover',
+          borderColor: '$borderColorHover',
+        },
+
+        pressStyle: {
+          backgroundColor: '$backgroundPress',
+          borderColor: '$borderColorPress',
+        },
+      },
+    },
+
+    disabled: {
+      true: {
+        opacity: 0.5,
+        cursor: 'not-allowed',
+        pointerEvents: 'none',
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: 'md',
+    variant: 'primary',
+  },
+});
+```
+
+#### Component-Specific Theme Configuration
+
+To enable component-specific theming, you need to define themes that target your component name:
+
+```typescript
+import { createThemes } from '@tamagui/theme-builder';
+
+const customThemes = createThemes({
+  base: {
+    palette: ['#ffffff', '#000000'],
+    template: 'base',
+  },
+
+  // Component-specific themes
+  componentThemes: {
+    CustomButton: {
+      template: 'base',
+    },
+    CustomCard: {
+      template: 'base',
+    },
+  },
+
+  // Child themes for component variants
+  childrenThemes: {
+    primary: {
+      palette: ['#007AFF', '#0A84FF'],
+      template: 'base',
+    },
+    secondary: {
+      palette: ['#34C759', '#30D158'],
+      template: 'base',
+    },
+  },
+});
+```
+
+This creates themes like:
+
+- `light_CustomButton`, `dark_CustomButton`
+- `light_primary_CustomButton`, `dark_primary_CustomButton`
+- `light_secondary_CustomButton`, `dark_secondary_CustomButton`
+
+#### Using Theme-Aware Components
+
+```typescript
+function App() {
+  return (
+    <div>
+      {/* Basic theme application */}
+      <Theme name="light">
+        <CustomCard>Light themed card</CustomCard>
+        <CustomButton>Light themed button</CustomButton>
+      </Theme>
+
+      <Theme name="dark">
+        <CustomCard>Dark themed card</CustomCard>
+        <CustomButton>Dark themed button</CustomButton>
+      </Theme>
+
+      {/* Nested theme application */}
+      <Theme name="light">
+        <CustomCard>Light card</CustomCard>
+
+        <Theme name="primary">
+          <CustomButton>Light primary button</CustomButton>
+          <CustomCard>Light primary card</CustomCard>
+        </Theme>
+
+        <Theme name="secondary">
+          <CustomButton>Light secondary button</CustomButton>
+          <CustomCard>Light secondary card</CustomCard>
+        </Theme>
+      </Theme>
+
+      {/* Component variants with themes */}
+      <Theme name="dark">
+        <CustomButton size="sm" variant="outline">Small outline button</CustomButton>
+        <CustomButton size="md" variant="primary">Medium primary button</CustomButton>
+        <CustomButton size="lg" variant="secondary">Large secondary button</CustomButton>
+      </Theme>
+    </div>
+  )
+}
+```
+
+#### Advanced: Context-Based Theming
+
+For more complex theming scenarios, you can use Tamagui's context system:
+
+```typescript
+import { createStyledContext, styled } from 'tamagui'
+
+// Create a context for your component
+const CustomComponentContext = createStyledContext<{
+  variant?: 'primary' | 'secondary' | 'tertiary'
+  size?: 'sm' | 'md' | 'lg'
+  theme?: 'light' | 'dark'
+}>({
+  variant: 'primary',
+  size: 'md',
+  theme: 'light',
+})
+
+const CustomComponent = styled('div', {
+  name: 'CustomComponent',
+  context: CustomComponentContext,
+
+  // Base styles
+  backgroundColor: '$background',
+  color: '$color',
+  borderColor: '$borderColor',
+  borderWidth: 1,
+  borderRadius: '$4',
+  padding: '$4',
+
+  // Variants that respond to context
+  variants: {
+    variant: {
+      primary: {
+        backgroundColor: '$blue9',
+        color: '$blue1',
+        borderColor: '$blue9',
+      },
+      secondary: {
+        backgroundColor: '$gray3',
+        color: '$gray11',
+        borderColor: '$gray6',
+      },
+      tertiary: {
+        backgroundColor: 'transparent',
+        color: '$color',
+        borderColor: '$borderColor',
+      },
+    },
+
+    size: {
+      sm: {
+        padding: '$2',
+        fontSize: '$sm',
+        borderRadius: '$2',
+      },
+      md: {
+        padding: '$4',
+        fontSize: '$md',
+        borderRadius: '$4',
+      },
+      lg: {
+        padding: '$6',
+        fontSize: '$lg',
+        borderRadius: '$6',
+      },
+    },
+  },
+
+  defaultVariants: {
+    variant: 'primary',
+    size: 'md',
+  },
+})
+
+// Usage with context
+function App() {
+  return (
+    <CustomComponentContext.Provider value={{ variant: 'primary', size: 'lg' }}>
+      <CustomComponent>Context-aware component</CustomComponent>
+    </CustomComponentContext.Provider>
+  )
+}
+```
+
+#### Theme-Aware Text Components
+
+For text components that need to respond to themes:
+
+```typescript
+import { styled } from 'tamagui';
+
+const CustomText = styled('span', {
+  name: 'CustomText',
+  fontFamily: '$body',
+  color: '$color',
+
+  variants: {
+    size: {
+      xs: { fontSize: '$xs' },
+      sm: { fontSize: '$sm' },
+      md: { fontSize: '$md' },
+      lg: { fontSize: '$lg' },
+      xl: { fontSize: '$xl' },
+    },
+
+    weight: {
+      normal: { fontWeight: '400' },
+      medium: { fontWeight: '500' },
+      semibold: { fontWeight: '600' },
+      bold: { fontWeight: '700' },
+    },
+
+    variant: {
+      body: {
+        color: '$color',
+        fontFamily: '$body',
+      },
+      heading: {
+        color: '$color',
+        fontFamily: '$heading',
+        fontWeight: '600',
+      },
+      caption: {
+        color: '$colorPress',
+        fontSize: '$sm',
+      },
+      link: {
+        color: '$blue9',
+        textDecoration: 'underline',
+
+        hoverStyle: {
+          color: '$blue10',
+        },
+
+        pressStyle: {
+          color: '$blue11',
+        },
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: 'md',
+    weight: 'normal',
+    variant: 'body',
+  },
+});
+```
+
+#### Best Practices for Theme-Aware Components
+
+1. **Always use `name` property**: This enables component-specific theming
+2. **Use theme tokens**: Always use `$` prefixed values for theme properties
+3. **Include interactive states**: Add `hoverStyle`, `pressStyle`, `focusStyle`
+4. **Define variants**: Create size, variant, and state variants
+5. **Use context for complex scenarios**: When you need to share theme state across components
+6. **Test with different themes**: Ensure your components work with all theme combinations
+
+```typescript
+// Example of a well-structured theme-aware component
+const WellStructuredComponent = styled('div', {
+  name: 'WellStructuredComponent', // ✅ Enables component theming
+
+  // ✅ Use theme tokens
+  backgroundColor: '$background',
+  color: '$color',
+  borderColor: '$borderColor',
+  borderWidth: 1,
+  borderRadius: '$4',
+  padding: '$4',
+
+  // ✅ Include interactive states
+  hoverStyle: {
+    backgroundColor: '$backgroundHover',
+    borderColor: '$borderColorHover',
+  },
+
+  pressStyle: {
+    backgroundColor: '$backgroundPress',
+    borderColor: '$borderColorPress',
+  },
+
+  focusStyle: {
+    backgroundColor: '$backgroundFocus',
+    borderColor: '$borderColorFocus',
+    outlineColor: '$outlineColor',
+    outlineWidth: 2,
+    outlineStyle: 'solid',
+  },
+
+  // ✅ Define variants
+  variants: {
+    size: {
+      sm: { padding: '$2', fontSize: '$sm' },
+      md: { padding: '$4', fontSize: '$md' },
+      lg: { padding: '$6', fontSize: '$lg' },
+    },
+
+    variant: {
+      primary: {
+        backgroundColor: '$blue9',
+        color: '$blue1',
+        borderColor: '$blue9',
+      },
+      secondary: {
+        backgroundColor: '$gray3',
+        color: '$gray11',
+        borderColor: '$gray6',
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: 'md',
+    variant: 'primary',
+  },
+});
+```
+
 ### 2. Theme Organization
 
 ```typescript
