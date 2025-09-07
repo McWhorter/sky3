@@ -138,35 +138,8 @@ import { tokens as defaultTokens } from '@tamagui/themes/v4';
 const customTokens = createTokens({
   ...defaultTokens,
 
-  // Extend size tokens
-  size: {
-    ...defaultTokens.size,
-    $xs: 12, // Extra small
-    $sm: 16, // Small
-    $md: 24, // Medium
-    $lg: 32, // Large
-    $xl: 48, // Extra large
-  },
-
-  // Extend space tokens
-  space: {
-    ...defaultTokens.space,
-    $xs: 6, // Extra small spacing
-    $sm: 12, // Small spacing
-    $md: 18, // Medium spacing
-    $lg: 24, // Large spacing
-    $xl: 36, // Extra large spacing
-  },
-
-  // Extend radius tokens
-  radius: {
-    ...defaultTokens.radius,
-    $xs: 2, // Extra small radius
-    $sm: 4, // Small radius
-    $md: 8, // Medium radius
-    $lg: 12, // Large radius
-    $xl: 16, // Extra large radius
-  },
+  // Note: Instead of extending tokens, use component variants with standard tokens
+  // This approach is simpler and doesn't require font configuration
 
   // Add custom z-index values
   zIndex: {
@@ -734,7 +707,7 @@ import { createThemes } from '@tamagui/theme-builder';
 import { createTokens } from '@tamagui/core';
 import { defaultConfig } from '@tamagui/config/v4';
 
-// Custom tokens
+// Custom tokens (NOT RECOMMENDED - use component variants instead)
 const customTokens = createTokens({
   ...defaultConfig.tokens,
   size: {
@@ -802,25 +775,20 @@ export default function App() {
 ### 1. Token Naming Conventions
 
 ```typescript
-// Good: Descriptive, consistent naming
-const tokens = createTokens({
-  size: {
-    $xs: 12, // Extra small
-    $sm: 16, // Small
-    $md: 24, // Medium
-    $lg: 32, // Large
-    $xl: 48, // Extra large
-  },
-  space: {
-    $xs: 6, // Extra small spacing
-    $sm: 12, // Small spacing
-    $md: 18, // Medium spacing
-    $lg: 24, // Large spacing
-    $xl: 36, // Extra large spacing
+// Good: Use standard tokens with component variants
+const CustomButton = styled(Button, {
+  variants: {
+    size: {
+      xs: { height: '$1', paddingHorizontal: '$1', fontSize: '$1' },
+      sm: { height: '$2', paddingHorizontal: '$2', fontSize: '$2' },
+      md: { height: '$3', paddingHorizontal: '$3', fontSize: '$3' },
+      lg: { height: '$4', paddingHorizontal: '$4', fontSize: '$4' },
+      xl: { height: '$5', paddingHorizontal: '$5', fontSize: '$5' },
+    },
   },
 });
 
-// Avoid: Inconsistent or unclear naming
+// Avoid: Creating custom tokens that require font configuration
 const badTokens = createTokens({
   size: {
     $tiny: 12,
@@ -832,9 +800,131 @@ const badTokens = createTokens({
 });
 ```
 
-### 2. Critical: Custom Size Tokens and Font Sizing
+### 2. Recommended Approach: Use Standard Tokens + Component Variants
 
-**IMPORTANT**: When adding custom size tokens, you MUST also configure font sizes to match. This is a common source of issues where fontSize doesn't work with custom tokens.
+**BETTER APPROACH**: Instead of creating custom size tokens (which requires extensive font configuration), use Tamagui's standard number system and add variants to your components. This is much simpler and more maintainable.
+
+#### Why This Approach is Better
+
+1. **No Font Configuration Needed**: Standard tokens (1, 2, 3, 4, etc.) already work with the font system
+2. **Less Configuration**: No need to map custom tokens to font sizes, line heights, etc.
+3. **More Maintainable**: Easier to understand and modify
+4. **Better Performance**: Uses Tamagui's optimized token system
+
+#### Simple Component Variants Approach
+
+```typescript
+import { styled, Button, Text } from 'tamagui';
+
+// Simple button with size variants using standard tokens
+const CustomButton = styled(Button, {
+  name: 'CustomButton',
+
+  variants: {
+    size: {
+      sm: {
+        height: '$2', // 28px - standard token
+        paddingHorizontal: '$2', // 28px - standard token
+        fontSize: '$2', // Works automatically!
+        borderRadius: '$2', // 5px - standard token
+      },
+      md: {
+        height: '$3', // 36px - standard token
+        paddingHorizontal: '$3', // 36px - standard token
+        fontSize: '$3', // Works automatically!
+        borderRadius: '$3', // 7px - standard token
+      },
+      lg: {
+        height: '$4', // 44px - standard token
+        paddingHorizontal: '$4', // 44px - standard token
+        fontSize: '$4', // Works automatically!
+        borderRadius: '$4', // 9px - standard token
+      },
+    },
+
+    variant: {
+      primary: {
+        backgroundColor: '$blue9',
+        borderColor: '$blue9',
+      },
+      secondary: {
+        backgroundColor: '$gray3',
+        borderColor: '$gray6',
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: 'md',
+    variant: 'primary',
+  },
+});
+
+// Simple text component with size variants
+const CustomText = styled(Text, {
+  name: 'CustomText',
+
+  variants: {
+    size: {
+      sm: { fontSize: '$2' }, // 12px - works automatically
+      md: { fontSize: '$3' }, // 13px - works automatically
+      lg: { fontSize: '$4' }, // 14px - works automatically
+      xl: { fontSize: '$5' }, // 16px - works automatically
+    },
+
+    weight: {
+      normal: { fontWeight: '400' },
+      medium: { fontWeight: '500' },
+      semibold: { fontWeight: '600' },
+      bold: { fontWeight: '700' },
+    },
+  },
+
+  defaultVariants: {
+    size: 'md',
+    weight: 'normal',
+  },
+});
+```
+
+#### Usage Examples
+
+```typescript
+import { View } from 'tamagui';
+
+function App() {
+  return (
+    <View>
+      {/* Buttons with semantic size names */}
+      <CustomButton size="sm">Small Button</CustomButton>
+      <CustomButton size="md">Medium Button</CustomButton>
+      <CustomButton size="lg">Large Button</CustomButton>
+
+      {/* Text with semantic size names */}
+      <CustomText size="sm">Small text</CustomText>
+      <CustomText size="md">Medium text</CustomText>
+      <CustomText size="lg">Large text</CustomText>
+
+      {/* Still works with standard tokens */}
+      <Button size="$3">Standard button</Button>
+      <Text size="$4">Standard text</Text>
+    </View>
+  )
+}
+```
+
+### 3. Advanced: Custom Size Tokens (Not Recommended)
+
+**⚠️ IMPORTANT**: This approach is more complex and generally not recommended. Use the component variants approach above instead.
+
+**Why the advanced approach is problematic:**
+
+- Requires extensive font configuration for each custom token
+- Must map custom tokens to font sizes, line heights, and other typography properties
+- More maintenance overhead and potential for errors
+- Doesn't leverage Tamagui's optimized token system
+
+**Recommended approach:** Use standard tokens (`$1`, `$2`, `$3`, etc.) with semantic variant names (`sm`, `md`, `lg`) in your components.
 
 #### The Problem
 
@@ -848,12 +938,12 @@ import { createTokens } from '@tamagui/core';
 import { createSystemFont } from '@tamagui/config';
 import { defaultConfig } from '@tamagui/config/v4';
 
-// 1. Create custom tokens with your size system
+// 1. Create custom tokens with your size system (NOT RECOMMENDED)
 const customTokens = createTokens({
   ...defaultConfig.tokens,
   size: {
     ...defaultConfig.tokens.size,
-    // Add your custom sizes
+    // Add your custom sizes - requires font configuration
     $xs: 12, // Extra small
     $sm: 16, // Small
     $md: 24, // Medium
@@ -871,7 +961,8 @@ const customTokens = createTokens({
   },
 });
 
-// 2. Create custom fonts that map to your size tokens
+// 2. Create custom fonts that map to your size tokens (COMPLEX - NOT RECOMMENDED)
+// This requires extensive font configuration for each custom token
 const customFonts = {
   body: createSystemFont({
     font: {
@@ -928,9 +1019,9 @@ const config = createTamagui({
 });
 ```
 
-#### Alternative: Extend Existing Font Sizes
+#### Alternative: Extend Existing Font Sizes (NOT RECOMMENDED)
 
-If you prefer to extend the existing font size system:
+If you prefer to extend the existing font size system (still complex):
 
 ```typescript
 import { createSystemFont } from '@tamagui/config';
@@ -957,7 +1048,7 @@ const customFonts = {
         14: 92, // Keep existing
         15: 114, // Keep existing
         16: 134, // Keep existing
-        // Add your custom sizes
+        // Add your custom sizes - still requires configuration
         $xs: 10,
         $sm: 12,
         $md: 14,
@@ -969,42 +1060,47 @@ const customFonts = {
 };
 ```
 
-### 3. Component Usage with Custom Size Tokens
+### 3. Component Usage with Standard Tokens (Recommended)
 
-Now you can use your custom size tokens in components:
+Use standard tokens with semantic variant names for the best developer experience:
 
 ```typescript
 import { styled, Button, Text } from 'tamagui';
 
-// Button with custom size variants
+// Button with semantic size variants using standard tokens
 const CustomButton = styled(Button, {
   name: 'CustomButton',
   variants: {
     size: {
       xs: {
-        height: '$xs',
-        paddingHorizontal: '$xs',
-        fontSize: '$xs', // This will now work!
+        height: '$1', // 20px - standard token
+        paddingHorizontal: '$1', // 20px - standard token
+        fontSize: '$1', // Works automatically!
+        borderRadius: '$1', // 3px - standard token
       },
       sm: {
-        height: '$sm',
-        paddingHorizontal: '$sm',
-        fontSize: '$sm', // This will now work!
+        height: '$2', // 28px - standard token
+        paddingHorizontal: '$2', // 28px - standard token
+        fontSize: '$2', // Works automatically!
+        borderRadius: '$2', // 5px - standard token
       },
       md: {
-        height: '$md',
-        paddingHorizontal: '$md',
-        fontSize: '$md', // This will now work!
+        height: '$3', // 36px - standard token
+        paddingHorizontal: '$3', // 36px - standard token
+        fontSize: '$3', // Works automatically!
+        borderRadius: '$3', // 7px - standard token
       },
       lg: {
-        height: '$lg',
-        paddingHorizontal: '$lg',
-        fontSize: '$lg', // This will now work!
+        height: '$4', // 44px - standard token
+        paddingHorizontal: '$4', // 44px - standard token
+        fontSize: '$4', // Works automatically!
+        borderRadius: '$4', // 9px - standard token
       },
       xl: {
-        height: '$xl',
-        paddingHorizontal: '$xl',
-        fontSize: '$xl', // This will now work!
+        height: '$5', // 52px - standard token
+        paddingHorizontal: '$5', // 52px - standard token
+        fontSize: '$5', // Works automatically!
+        borderRadius: '$5', // 10px - standard token
       },
     },
   },
@@ -1013,17 +1109,17 @@ const CustomButton = styled(Button, {
   },
 });
 
-// Text component with custom sizes
+// Text component with semantic sizes using standard tokens
 const CustomText = styled(Text, {
   name: 'CustomText',
   fontFamily: '$body',
   variants: {
     size: {
-      xs: { fontSize: '$xs' }, // Works with proper font config
-      sm: { fontSize: '$sm' }, // Works with proper font config
-      md: { fontSize: '$md' }, // Works with proper font config
-      lg: { fontSize: '$lg' }, // Works with proper font config
-      xl: { fontSize: '$xl' }, // Works with proper font config
+      xs: { fontSize: '$1' }, // 20px - works automatically
+      sm: { fontSize: '$2' }, // 28px - works automatically
+      md: { fontSize: '$3' }, // 36px - works automatically
+      lg: { fontSize: '$4' }, // 44px - works automatically
+      xl: { fontSize: '$5' }, // 52px - works automatically
     },
   },
   defaultVariants: {
@@ -1037,32 +1133,32 @@ const CustomText = styled(Text, {
 ```typescript
 import { View } from 'tamagui';
 
-// Using the custom components
+// Using the custom components with semantic names
 function App() {
   return (
     <View>
-      {/* Buttons with custom sizes */}
+      {/* Buttons with semantic size names */}
       <CustomButton size="xs">Extra Small Button</CustomButton>
       <CustomButton size="sm">Small Button</CustomButton>
       <CustomButton size="md">Medium Button</CustomButton>
       <CustomButton size="lg">Large Button</CustomButton>
       <CustomButton size="xl">Extra Large Button</CustomButton>
 
-      {/* Text with custom sizes */}
+      {/* Text with semantic size names */}
       <CustomText size="xs">Extra small text</CustomText>
       <CustomText size="sm">Small text</CustomText>
       <CustomText size="md">Medium text</CustomText>
       <CustomText size="lg">Large text</CustomText>
       <CustomText size="xl">Extra large text</CustomText>
 
-      {/* Using Tamagui's built-in components with custom tokens */}
-      <Button size="$sm">Small Button</Button>
-      <Button size="$md">Medium Button</Button>
-      <Button size="$lg">Large Button</Button>
+      {/* Using Tamagui's built-in components with standard tokens */}
+      <Button size="$1">Small Button</Button>
+      <Button size="$2">Medium Button</Button>
+      <Button size="$3">Large Button</Button>
 
-      <Text size="$sm">Small Text</Text>
-      <Text size="$md">Medium Text</Text>
-      <Text size="$lg">Large Text</Text>
+      <Text size="$1">Small Text</Text>
+      <Text size="$2">Medium Text</Text>
+      <Text size="$3">Large Text</Text>
     </View>
   )
 }
@@ -1187,19 +1283,19 @@ const CustomButton = styled(Button, {
       sm: {
         paddingHorizontal: '$2',
         paddingVertical: '$2',
-        fontSize: '$sm',
+        fontSize: '$2',
         borderRadius: '$2',
       },
       md: {
         paddingHorizontal: '$4',
         paddingVertical: '$3',
-        fontSize: '$md',
+        fontSize: '$3',
         borderRadius: '$4',
       },
       lg: {
         paddingHorizontal: '$6',
         paddingVertical: '$4',
-        fontSize: '$lg',
+        fontSize: '$4',
         borderRadius: '$6',
       },
     },
@@ -1403,17 +1499,17 @@ const CustomComponent = styled(View, {
     size: {
       sm: {
         padding: '$2',
-        fontSize: '$sm',
+        fontSize: '$2',
         borderRadius: '$2',
       },
       md: {
         padding: '$4',
-        fontSize: '$md',
+        fontSize: '$3',
         borderRadius: '$4',
       },
       lg: {
         padding: '$6',
-        fontSize: '$lg',
+        fontSize: '$4',
         borderRadius: '$6',
       },
     },
@@ -1448,11 +1544,11 @@ const CustomText = styled(Text, {
 
   variants: {
     size: {
-      xs: { fontSize: '$xs' },
-      sm: { fontSize: '$sm' },
-      md: { fontSize: '$md' },
-      lg: { fontSize: '$lg' },
-      xl: { fontSize: '$xl' },
+      xs: { fontSize: '$1' },
+      sm: { fontSize: '$2' },
+      md: { fontSize: '$3' },
+      lg: { fontSize: '$4' },
+      xl: { fontSize: '$5' },
     },
 
     weight: {
@@ -1472,7 +1568,7 @@ const CustomText = styled(Text, {
       },
       caption: {
         color: '$colorPress',
-        fontSize: '$sm',
+        fontSize: '$2',
       },
       link: {
         color: '$blue9',
@@ -1542,9 +1638,9 @@ const WellStructuredComponent = styled(View, {
   // ✅ Define variants
   variants: {
     size: {
-      sm: { padding: '$2', fontSize: '$sm' },
-      md: { padding: '$4', fontSize: '$md' },
-      lg: { padding: '$6', fontSize: '$lg' },
+      sm: { padding: '$2', fontSize: '$2' },
+      md: { padding: '$4', fontSize: '$3' },
+      lg: { padding: '$6', fontSize: '$4' },
     },
 
     variant: {
