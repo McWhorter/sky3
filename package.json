@@ -1,17 +1,17 @@
 {
-  "name": "dcx-skylight",
+  "name": "skylight",
   "private": false,
   "version": "3.0.0",
   "description": "A React Native Web UI component library",
   "type": "module",
-  "main": "./dist/dcx-skylight.umd.js",
-  "module": "./dist/dcx-skylight.es.js",
+  "main": "./dist/skylight.umd.js",
+  "module": "./dist/skylight.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/dcx-skylight.es.js",
-      "require": "./dist/dcx-skylight.umd.js"
+      "import": "./dist/skylight.es.js",
+      "require": "./dist/skylight.umd.js"
     }
   },
   "files": [
@@ -32,7 +32,8 @@
     "test:coverage": "vitest run --coverage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "format:staged": "prettier --write"
+    "format:staged": "prettier --write",
+    "generate-themes": "npx @tamagui/cli generate-themes ./builder.ts ./skylight/custom-themes.ts"
   },
   "keywords": [
     "react",

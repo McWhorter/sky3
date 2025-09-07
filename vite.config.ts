@@ -9,12 +9,12 @@ export default defineConfig({
   plugins: [
     react(),
     tamaguiPlugin({
-      config: './skylight/config.ts',
+      config: resolve(__dirname, 'skylight/config.ts'),
       components: ['@tamagui/core'],
     }),
     dts({
       insertTypesEntry: true,
-      exclude: ['src/demo/**/*', 'src/App.tsx', 'src/main.tsx'],
+      exclude: ['src/app/**/*'],
     }),
   ],
   resolve: {
@@ -26,9 +26,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/lib/index.ts'),
-      name: 'DCXSkylight',
+      name: 'Skylight',
       formats: ['es', 'umd'],
-      fileName: format => `dcx-skylight.${format}.js`,
+      fileName: format => `index.${format}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'react-native-web'],
