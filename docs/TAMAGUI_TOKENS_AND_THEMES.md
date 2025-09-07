@@ -408,6 +408,202 @@ const customThemes = createThemes({
 });
 ```
 
+### Understanding Templates: What is `template: 'base'`?
+
+The `template` property is a crucial concept in Tamagui's theme system. It defines **how palette colors are mapped to theme properties**. Think of it as a "recipe" that tells Tamagui which palette color to use for each theme property.
+
+#### What Templates Do
+
+Templates map palette indices to theme properties. For example, the `base` template defines:
+
+- `background: 6` - Use palette index 6 for background
+- `backgroundHover: 5` - Use palette index 5 for hover background (lighter)
+- `backgroundPress: 7` - Use palette index 7 for press background (darker)
+- `color: -6` - Use palette index -6 (counting from end) for text color
+- `borderColor: 9` - Use palette index 9 for border color
+
+#### Available Templates
+
+Based on the actual implementation, Tamagui provides these built-in templates:
+
+```typescript
+// Available templates in Tamagui v4
+const availableTemplates = {
+  base: {
+    // Standard theme mapping - most commonly used
+    background: 6,
+    backgroundHover: 5, // Lighter on hover
+    backgroundPress: 7, // Darker on press
+    backgroundFocus: 7, // Darker on focus
+    color: -6, // Text color (from end of palette)
+    colorHover: -7, // Lighter text on hover
+    colorPress: -6, // Same as base on press
+    colorFocus: -7, // Lighter text on focus
+    borderColor: 9, // Border color
+    borderColorHover: 8, // Lighter border on hover
+    borderColorPress: 10, // Darker border on press
+    borderColorFocus: 9, // Same as base on focus
+    // ... and many more properties
+  },
+
+  surface1: {
+    // Slightly elevated surface (background + 1)
+    background: 7, // One step up from base
+    backgroundHover: 6, // Lighter on hover
+    backgroundPress: 8, // Darker on press
+    // ... same pattern but shifted up
+  },
+
+  surface2: {
+    // More elevated surface (background + 2)
+    background: 8, // Two steps up from base
+    // ... same pattern but shifted up more
+  },
+
+  surface3: {
+    // Highest surface (background + 3)
+    background: 9, // Three steps up from base
+    // ... same pattern but shifted up most
+  },
+
+  alt1: {
+    // Alternative text colors (color - 1)
+    color: -7, // One step lighter than base
+    colorHover: -8, // Even lighter on hover
+    // ... same pattern but with lighter text
+  },
+
+  alt2: {
+    // More alternative text colors (color - 2)
+    color: -8, // Two steps lighter than base
+    // ... same pattern but with even lighter text
+  },
+
+  inverse: {
+    // Inverted colors (negative indices)
+    background: -6, // Inverted background
+    color: 6, // Inverted text color
+    // ... all colors inverted
+  },
+};
+```
+
+#### How Templates Work with Palettes
+
+```typescript
+// Example palette (11 colors)
+const palette = [
+  '#ffffff', // Index 0 - lightest
+  '#f8f9fa', // Index 1
+  '#e9ecef', // Index 2
+  '#dee2e6', // Index 3
+  '#ced4da', // Index 4
+  '#adb5bd', // Index 5
+  '#6c757d', // Index 6 - base background
+  '#495057', // Index 7
+  '#343a40', // Index 8
+  '#212529', // Index 9 - base border
+  '#000000', // Index 10 - darkest
+];
+
+// With template: 'base'
+const theme = {
+  background: palette[6], // '#6c757d' - base background
+  backgroundHover: palette[5], // '#adb5bd' - lighter on hover
+  backgroundPress: palette[7], // '#495057' - darker on press
+  color: palette[4], // '#ced4da' - text color (index -6 from end)
+  borderColor: palette[9], // '#212529' - border color
+};
+```
+
+#### When to Use Different Templates
+
+```typescript
+const themes = createThemes({
+  base: {
+    palette: ['#ffffff', '#000000'],
+    template: 'base', // ✅ Standard theme - most common
+  },
+
+  // For elevated surfaces (cards, modals, etc.)
+  card: {
+    palette: ['#ffffff', '#000000'],
+    template: 'surface1', // ✅ Slightly elevated background
+  },
+
+  modal: {
+    palette: ['#ffffff', '#000000'],
+    template: 'surface2', // ✅ More elevated background
+  },
+
+  // For alternative text colors
+  muted: {
+    palette: ['#ffffff', '#000000'],
+    template: 'alt1', // ✅ Lighter text colors
+  },
+
+  // For inverted themes (dark text on light background)
+  inverse: {
+    palette: ['#ffffff', '#000000'],
+    template: 'inverse', // ✅ Inverted color scheme
+  },
+});
+```
+
+#### Custom Templates
+
+You can also create custom templates:
+
+```typescript
+const customTemplates = {
+  base: {
+    // Standard mapping
+    background: 6,
+    backgroundHover: 5,
+    backgroundPress: 7,
+    color: -6,
+    borderColor: 9,
+  },
+
+  // Custom template for buttons
+  button: {
+    background: 7, // Slightly darker background
+    backgroundHover: 6, // Lighter on hover
+    backgroundPress: 8, // Darker on press
+    color: -5, // Slightly lighter text
+    borderColor: 8, // Lighter border
+  },
+
+  // Custom template for inputs
+  input: {
+    background: 5, // Lighter background
+    backgroundHover: 4, // Even lighter on hover
+    backgroundPress: 6, // Darker on press
+    color: -7, // Darker text
+    borderColor: 7, // Darker border
+  },
+};
+
+const themes = createThemes({
+  base: {
+    palette: ['#ffffff', '#000000'],
+    template: 'base',
+  },
+
+  button: {
+    palette: ['#007AFF', '#0A84FF'],
+    template: 'button', // ✅ Use custom button template
+  },
+
+  input: {
+    palette: ['#34C759', '#30D158'],
+    template: 'input', // ✅ Use custom input template
+  },
+
+  templates: customTemplates, // ✅ Provide custom templates
+});
+```
+
 ### Palette Definition
 
 Palettes can be defined in multiple ways:
