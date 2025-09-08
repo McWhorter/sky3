@@ -4,14 +4,14 @@
   "version": "3.0.0",
   "description": "A React Native Web UI component library",
   "type": "module",
-  "main": "./dist/skylight.umd.js",
-  "module": "./dist/skylight.es.js",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/skylight.es.js",
-      "require": "./dist/skylight.umd.js"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
     }
   },
   "files": [
@@ -33,7 +33,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:staged": "prettier --write",
-    "generate-themes": "npx @tamagui/cli generate-themes ./builder.ts ./skylight/custom-themes.ts"
+    "generate-themes": "npx @tamagui/cli generate-themes ./builder.ts ./skylight/generated-themes.ts"
   },
   "keywords": [
     "react",
