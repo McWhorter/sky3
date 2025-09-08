@@ -29,17 +29,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: {
-        sm: '$sm',
-        md: '$md',
-        lg: '$lg',
-        xl: '$xl',
-        '2xl': '$2xl',
-        '3xl': '$3xl',
-        '4xl': '$4xl',
-        '5xl': '$5xl',
-        '6xl': '$6xl',
-      },
+      options: ['$sm', '$md', '$lg', '$xl', '$2xl', '$3xl', '$4xl', '$5xl', '$6xl'],
       description: 'Size of the button',
     },
     onPress: {

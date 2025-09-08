@@ -9,6 +9,9 @@ dist/
 build/
 .tamagui/
 
+# Package bundles
+*.tgz
+
 # Environment variables
 .env
 .env.local
@@ -43,3 +46,6 @@ coverage/
 *.tsbuildinfo
 *storybook.log
 storybook-static
+
+# Sandbox
+sandbox/
