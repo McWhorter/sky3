@@ -33,7 +33,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:staged": "prettier --write",
-    "generate-themes": "npx @tamagui/cli generate-themes ./builder.ts ./skylight/generated-themes.ts"
+    "generate-themes": "NODE_ENV=node npx @tamagui/cli generate-themes ./sandbox/playground.ts ./skylight/generated-themes.ts"
   },
   "keywords": [
     "react",

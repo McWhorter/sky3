@@ -1,10 +1,12 @@
-import { createShorthands, createTamagui, createTokens } from '@tamagui/core';
+import { createShorthands, createTamagui, createTokens, isWeb } from '@tamagui/core';
 import { createSystemFont, defaultConfig } from '@tamagui/config/v4';
-import { themes } from './themes';
+// import { themes } from './themes';
+import { baseThemes, childThemes } from './new-themes';
 
 const skylightTokens = createTokens({
   ...defaultConfig.tokens,
   size: {
+    // ...defaultConfig.tokens.size,
     // Skylight size tokens (1-10 of the tamagui size tokens)
     $xs: 20, // 1
     $sm: 28, // 2
@@ -19,70 +21,101 @@ const skylightTokens = createTokens({
     $6xl: 104, // 10
   },
   space: {
+    // ...defaultConfig.tokens.space,
     // Calculated from size tokens using the `sizeToSpace` utility
-    $xs: 2,
-    $sm: 7,
-    $md: 13,
-    $lg: 18,
-    $xl: 24,
-    $2xl: 32,
-    $3xl: 39,
-    $4xl: 46,
-    $5xl: 53,
-    $6xl: 60,
+    $xs: 8,
+    $sm: 15,
+    $md: 20,
+    $true: 20,
+    $lg: 30,
+    $xl: 40,
+    $2xl: 50,
+    $3xl: 60,
+    $4xl: 72,
+    $5xl: 84,
+    $6xl: 96,
   },
   radius: {
+    ...defaultConfig.tokens.radius,
     // Skylight radius tokens (bespoke to skylight)
-    true: 3,
+    // $xs: 2,
+    // $sm: 4,
+    // $md: 6,
+    $true: 6,
+    // $lg: 8,
+    // $xl: 10,
+    // $2xl: 12,
+    // $3xl: 14,
+    // $4xl: 16,
+    // $5xl: 18,
+    // $6xl: 20,
+    // $full: 9999,
   },
 });
 
+const interFont = {
+  family: isWeb ? 'Inter, Helvetica, Arial, sans-serif' : 'Inter',
+  weight: {
+    4: '400',
+    7: '700',
+  },
+  face: {
+    400: { normal: 'Inter', italic: 'Inter-Italic' },
+    700: { normal: 'InterBold', italic: 'InterBold-Italic' },
+  },
+};
+
 const skylightFonts = {
-  heading: createSystemFont({
-    font: {
-      family:
-        '-apple-system, system-ui, BlinkMacSystemFont, Montserrat, Roboto, "Segoe UI", Helvetica, Arial, sans-serif',
-      size: {
+  heading: {
+    ...createSystemFont({
+      font: {
         // Skylight font size tokens (1-10 of the tamagui font size tokens)
-        $xs: 16, // 1
-        $sm: 20, // 2
-        $md: 24, // 3
-        $lg: 28, // 4
-        $xl: 32, // 5
-        $2xl: 36, // 6
-        $3xl: 40, // 7
-        $4xl: 44, // 8
-        $5xl: 48, // 9
-        $6xl: 52, // 10
+        size: {
+          $xs: 16, // 1
+          $sm: 20, // 2
+          $md: 24, // 3
+          $lg: 28, // 4
+          $xl: 32, // 5
+          $2xl: 36, // 6
+          $3xl: 40, // 7
+          $4xl: 44, // 8
+          $5xl: 48, // 9
+          $6xl: 52, // 10
+        },
       },
-    },
-    sizeSize: n => n * 1.4,
-  }),
-  body: createSystemFont({
-    font: {
-      family:
-        '-apple-system, system-ui, BlinkMacSystemFont, Roboto, "Segoe UI", Helvetica, Arial, sans-serif',
-      size: {
+      sizeSize: n => n * 1.4,
+    }),
+    ...interFont,
+  },
+  body: {
+    ...createSystemFont({
+      font: {
         // Skylight font size tokens (1-10 of the tamagui font size tokens)
-        $xs: 11, // 1
-        $sm: 12, // 2
-        $md: 13, // 3
-        $lg: 14, // 4
-        true: 14,
-        $xl: 16, // 5
-        $2xl: 18, // 6
-        $3xl: 20, // 7
-        $4xl: 23, // 8
-        $5xl: 30, // 9
-        $6xl: 46, // 10
+        size: {
+          $xs: 11, // 1
+          $sm: 12, // 2
+          $md: 13, // 3
+          $lg: 14, // 4
+          $true: 14,
+          $xl: 16, // 5
+          $2xl: 18, // 6
+          $3xl: 20, // 7
+          $4xl: 23, // 8
+          $5xl: 30, // 9
+          $6xl: 46, // 10
+        },
       },
-    },
-  }),
+      sizeSize: n => n * 1,
+    }),
+    ...interFont,
+  },
 };
 
 const skylightThemes = {
   // ...defaultConfig.themes,
-  ...themes,
+  // ...themes,
+  ...baseThemes,
+  ...childThemes,
 };
 
 const skylightShorthands = createShorthands({

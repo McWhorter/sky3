@@ -23,7 +23,7 @@ import { Provider } from '@/Provider';
 
 const modes: ThemeName[] = ['light', 'dark'];
 const themes: ThemeName[] = ['blue', 'green', 'yellow', 'red'];
-const sizes: SizeTokens[] = ['$xs', '$sm', '$md', '$lg'];
+const sizes: SizeTokens[] = ['$sm', '$md', '$lg', '$4xl'];
 
 export const Demo: React.FC = () => {
   return (
@@ -42,14 +42,11 @@ export const Demo: React.FC = () => {
               themes, and flexible components.
             </Text>
           </YStack>
-
-          <Separator />
-
           {modes.map(mode => (
             <Theme key={mode} name={mode}>
               <Card>
                 <YStack gap="$lg" padding="$xl" margin="auto">
-                  <H2>Button Component</H2>
+                  <H2>Button Component {mode}</H2>
                   {themes.map(theme => (
                     <View key={theme}>
                       <H3>Button ({theme})</H3>
@@ -57,11 +54,23 @@ export const Demo: React.FC = () => {
                         {sizes.map(size => (
                           <Button size={size} theme={theme} key={size}>
                             <Button.Text>{size} Button</Button.Text>
-                            <Button.Icon>
-                              <Airplay />
-                            </Button.Icon>
                           </Button>
                         ))}
+                        <Button size="$lg" theme={theme} disabled>
+                          <Button.Text>Disabled</Button.Text>
+                        </Button>
+                        <Button size="$lg" theme={theme} disabled variant="outlined">
+                          <Button.Text>Disabled</Button.Text>
+                        </Button>
+                        <Button theme={theme} variant="outlined">
+                          <Button.Text>Outlined</Button.Text>
+                        </Button>
+                        <Button size="$lg" theme={theme}>
+                          <Button.Text>Inverted</Button.Text>
+                        </Button>
+                        <Button size="$lg" theme={theme}>
+                          Just text
+                        </Button>
                       </XStack>
                     </View>
                   ))}
