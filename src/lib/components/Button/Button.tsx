@@ -1,69 +1,221 @@
-import type { GetProps } from 'tamagui';
-import { Button as TamaguiButton, withStaticProperties, styled } from 'tamagui';
-import { getButtonSized } from '@tamagui/get-button-sized';
-import { ButtonContext } from '@tamagui/button';
+import {
+  SizableText,
+  Spinner,
+  styled,
+  ThemeableStack,
+  withStaticProperties,
+  XStack,
+  type SizeTokens,
+  type TextParentStyles,
+  type TextContextStyles,
+  createStyledContext,
+  type GetProps,
+  useGetThemedIcon,
+  View,
+  getFontSize,
+} from 'tamagui';
 
-const ButtonFrame = styled(TamaguiButton, {
+import type { ThemeableProps } from '@tamagui/web';
+import { useContext } from 'react';
+
+export type ButtonSizeVariants = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'outlined';
+type ButtonExtraProps = TextParentStyles &
+  ThemeableProps & {
+    size?: ButtonSizeVariants;
+    loading?: boolean;
+  };
+export type ButtonProps = ButtonExtraProps & GetProps<typeof ButtonFrame>;
+
+const ButtonContext = createStyledContext<
+  Partial<
+    TextContextStyles & {
+      size: SizeTokens;
+      variant?: ButtonVariant;
+    }
+  >
+>({
+  // keeping these here means they work with styled() passing down color to text
+  color: undefined,
+  ellipse: undefined,
+  fontFamily: undefined,
+  fontSize: undefined,
+  fontStyle: undefined,
+  fontWeight: undefined,
+  letterSpacing: undefined,
+  maxFontSizeMultiplier: undefined,
+  size: undefined,
+  textAlign: undefined,
+  variant: undefined,
+});
+
+const ButtonFrame = styled(ThemeableStack, {
   name: 'Button',
+  role: 'button',
+  tag: 'button',
+  context: ButtonContext,
+
+  focusable: true,
+  hoverTheme: true,
+  pressTheme: true,
+  backgrounded: true,
+
+  position: 'relative',
   animation: 'quickest',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'nowrap',
+  flexDirection: 'row',
+  cursor: 'pointer',
+  borderColor: 'transparent',
+  borderRadius: '$true',
+  borderWidth: 1,
 
   focusVisibleStyle: {
+    outlineColor: '$outlineColor',
+    outlineStyle: 'solid',
     outlineWidth: 3,
   },
 
   variants: {
-    size: {
-      '...size': (val, extras) => {
-        const baseSizing = getButtonSized(val, extras);
-        const customStyles = {
-          $sm: { paddingHorizontal: '$sm' },
-          $md: { paddingHorizontal: '$md' },
-          $lg: { paddingHorizontal: '$lg' },
-        };
-        return {
-          ...baseSizing,
-          ...customStyles[val],
-        };
+    variant: {
+      outlined: {
+        borderWidth: 2,
+        borderColor: '$borderColor',
+        backgroundColor: 'transparent',
+        color: '$background',
+
+        hoverStyle: {
+          borderColor: '$borderColorHover',
+          backgroundColor: 'transparent',
+        },
+
+        pressStyle: {
+          borderColor: '$borderColorPress',
+          backgroundColor: 'transparent',
+        },
+
+        focusVisibleStyle: {
+          borderColor: '$borderColorFocus',
+          backgroundColor: 'transparent',
+        },
       },
     },
 
-    loading: {
-      true: {
-        // TODO: add loading state
+    size: {
+      sm: {
+        height: '$3',
+        paddingHorizontal: 15,
+      },
+      md: {
+        height: '$3.5',
+        paddingHorizontal: 30,
+      },
+      lg: {
+        height: '$4',
+        paddingHorizontal: 30,
       },
     },
 
     disabled: {
       true: {
+        pointerEvents: 'none',
         opacity: 0.4,
       },
     },
 
-    variant: {
-      outlined: {
-        backgroundColor: 'transparent',
-        color: '$background',
+    loading: {
+      true: {
+        opacity: 1,
       },
     },
-  },
+  } as const,
 
   defaultVariants: {
-    size: '$md',
-    theme: 'blue',
+    size: 'md',
+    loading: false,
     disabled: false,
   },
 });
 
-const ButtonText = styled(TamaguiButton.Text, {
+const ButtonText = styled(SizableText, {
   name: 'ButtonText',
   context: ButtonContext,
+
+  ellipse: true,
+
   textTransform: 'uppercase',
-  fontWeight: '$7',
+  fontWeight: 'bold',
+  fontSize: '$4',
+  userSelect: 'none',
+  cursor: 'pointer',
+  flexGrow: 0,
+  flexShrink: 1,
+  color: '$color',
 });
 
-export const Button = withStaticProperties(ButtonFrame, {
+const ButtonIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
+  const { children, scaleIcon = 2 } = props;
+  const { color, size = 'md' } = useContext(ButtonContext);
+
+  const iconSizes = {
+    sm: '$1',
+    md: '$1',
+    lg: '$1',
+  };
+
+  const iconSize = getFontSize(iconSizes[size]) * scaleIcon;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getThemedIcon = useGetThemedIcon({ size: iconSize, color: color as any });
+  return getThemedIcon(children);
+};
+
+const SpinnerOverlay = styled(View, {
+  name: 'SpinnerOverlay',
+  context: ButtonContext,
+
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  zIndex: 1,
+});
+
+const ButtonComponent = ButtonFrame.styleable<ButtonProps>(function Button(
+  { loading = false, disabled = false, children, ...props },
+  ref
+) {
+  const isFunctionallyDisabled = disabled || loading;
+
+  return (
+    <ButtonFrame
+      ref={ref}
+      disabled={isFunctionallyDisabled}
+      loading={loading}
+      aria-busy={loading}
+      {...props}
+    >
+      <XStack
+        gap="$3"
+        alignItems="center"
+        justifyContent="center"
+        style={{ visibility: loading ? 'hidden' : 'visible' }}
+      >
+        {children}
+      </XStack>
+      {loading && (
+        <SpinnerOverlay>
+          <Spinner size="small" color="$color" />
+        </SpinnerOverlay>
+      )}
+    </ButtonFrame>
+  );
+});
+
+ButtonComponent.displayName = 'Button';
+
+export const Button = withStaticProperties(ButtonComponent, {
+  Icon: ButtonIcon,
   Text: ButtonText,
-  Icon: TamaguiButton.Icon,
 });
-
-export type ButtonProps = GetProps<typeof Button>;

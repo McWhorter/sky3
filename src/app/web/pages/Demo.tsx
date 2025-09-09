@@ -10,27 +10,25 @@ import {
   H6,
   Text,
   Card,
-  Separator,
   Theme,
   XStack,
-  View,
   type ThemeName,
-  type SizeTokens,
 } from 'tamagui';
-import { Airplay } from '@tamagui/lucide-icons';
+import type { ButtonSizeVariants } from '@/components';
 import { Button } from '@/components';
 import { Provider } from '@/Provider';
+import { Airplay } from '@tamagui/lucide-icons';
 
 const modes: ThemeName[] = ['light', 'dark'];
-const themes: ThemeName[] = ['blue', 'green', 'yellow', 'red'];
-const sizes: SizeTokens[] = ['$sm', '$md', '$lg', '$4xl'];
+const themes: ThemeName[] = ['blue'];
+const sizes: ButtonSizeVariants[] = ['sm', 'md', 'lg'];
 
 export const Demo: React.FC = () => {
   return (
     <Provider>
       <ScrollView>
         <YStack>
-          <YStack padding="$xl" margin="auto">
+          <YStack padding="$6" margin="auto">
             <H1>Welcome to Skylight v3</H1>
             <H2>Welcome to Skylight v3</H2>
             <H3>Welcome to Skylight v3</H3>
@@ -45,34 +43,44 @@ export const Demo: React.FC = () => {
           {modes.map(mode => (
             <Theme key={mode} name={mode}>
               <Card>
-                <YStack gap="$lg" padding="$xl" margin="auto">
+                <YStack gap="$4" padding="$4" margin="auto">
                   <H2>Button Component {mode}</H2>
                   {themes.map(theme => (
-                    <View key={theme}>
-                      <H3>Button ({theme})</H3>
-                      <XStack gap="$md">
+                    <YStack gap="$4" key={theme}>
+                      <H3>Button Sizes</H3>
+                      <XStack gap="$4">
                         {sizes.map(size => (
                           <Button size={size} theme={theme} key={size}>
                             <Button.Text>{size} Button</Button.Text>
+                            <Button.Icon>
+                              <Airplay />
+                            </Button.Icon>
                           </Button>
                         ))}
-                        <Button size="$lg" theme={theme} disabled>
+                      </XStack>
+
+                      <H3>Button States</H3>
+
+                      <XStack gap="$4">
+                        <Button theme={theme} loading>
+                          <Button.Text>Loading</Button.Text>
+                        </Button>
+                        <Button theme={theme} disabled>
                           <Button.Text>Disabled</Button.Text>
-                        </Button>
-                        <Button size="$lg" theme={theme} disabled variant="outlined">
-                          <Button.Text>Disabled</Button.Text>
-                        </Button>
-                        <Button theme={theme} variant="outlined">
-                          <Button.Text>Outlined</Button.Text>
-                        </Button>
-                        <Button size="$lg" theme={theme}>
-                          <Button.Text>Inverted</Button.Text>
-                        </Button>
-                        <Button size="$lg" theme={theme}>
-                          Just text
                         </Button>
                       </XStack>
-                    </View>
+
+                      <H3>Button Variants</H3>
+
+                      <XStack gap="$4">
+                        <Button theme={theme} variant="outlined" loading>
+                          <Button.Text>Loading</Button.Text>
+                        </Button>
+                        <Button theme={theme} variant="outlined" disabled>
+                          <Button.Text>Disabled</Button.Text>
+                        </Button>
+                      </XStack>
+                    </YStack>
                   ))}
                 </YStack>
               </Card>

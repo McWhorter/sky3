@@ -6,34 +6,34 @@ import { baseThemes, childThemes } from './new-themes';
 const skylightTokens = createTokens({
   ...defaultConfig.tokens,
   size: {
-    // ...defaultConfig.tokens.size,
+    ...defaultConfig.tokens.size,
     // Skylight size tokens (1-10 of the tamagui size tokens)
-    $xs: 20, // 1
-    $sm: 28, // 2
-    $md: 36, // 3
-    $lg: 44, // 4
-    $true: 44,
-    $xl: 52, // 5
-    $2xl: 64, // 6
-    $3xl: 74, // 7
-    $4xl: 84, // 8
-    $5xl: 94, // 9
-    $6xl: 104, // 10
+    // $xs: 20, // 1
+    // $sm: 28, // 2
+    // $md: 36, // 3
+    // $lg: 44, // 4
+    // $true: 44,
+    // $xl: 52, // 5
+    // $2xl: 64, // 6
+    // $3xl: 74, // 7
+    // $4xl: 84, // 8
+    // $5xl: 94, // 9
+    // $6xl: 104, // 10
   },
   space: {
-    // ...defaultConfig.tokens.space,
+    ...defaultConfig.tokens.space,
     // Calculated from size tokens using the `sizeToSpace` utility
-    $xs: 8,
-    $sm: 15,
-    $md: 20,
-    $true: 20,
-    $lg: 30,
-    $xl: 40,
-    $2xl: 50,
-    $3xl: 60,
-    $4xl: 72,
-    $5xl: 84,
-    $6xl: 96,
+    // $xs: 8,
+    // $sm: 15,
+    // $md: 20,
+    // $true: 20,
+    // $lg: 30,
+    // $xl: 40,
+    // $2xl: 50,
+    // $3xl: 60,
+    // $4xl: 72,
+    // $5xl: 84,
+    // $6xl: 96,
   },
   radius: {
     ...defaultConfig.tokens.radius,
@@ -141,7 +141,7 @@ const skylightShorthands = createShorthands({
 // Create the main Tamagui configuration
 const skylightConfig = createTamagui({
   ...defaultConfig,
-  fonts: skylightFonts,
+  // fonts: skylightFonts,
   tokens: skylightTokens,
   themes: skylightThemes,
   shorthands: skylightShorthands,

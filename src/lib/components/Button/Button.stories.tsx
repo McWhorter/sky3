@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
+import { XStack } from 'tamagui';
 
 const mockFn = () => () => console.log('Button clicked');
 
@@ -24,13 +25,21 @@ const meta: Meta<typeof Button> = {
     },
     theme: {
       control: 'select',
-      options: [undefined, 'blue', 'green', 'yellow', 'red'],
+      options: ['blue'],
       description: 'Theme of the button',
     },
     size: {
       control: 'select',
-      options: ['$sm', '$md', '$lg', '$xl', '$2xl', '$3xl', '$4xl', '$5xl', '$6xl'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size of the button',
+    },
+    loading: {
+      control: 'boolean',
+      description: 'Shows loading spinner and disables button while preserving theme colors',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disables the button with reduced opacity',
     },
     onPress: {
       action: 'pressed',
@@ -38,23 +47,117 @@ const meta: Meta<typeof Button> = {
     },
   },
   args: {
+    theme: 'blue',
+    size: 'md',
+    children: 'Button',
     onPress: mockFn(),
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
-// Default story
 export const Default: Story = {
   render: args => (
     <Button {...args}>
       <Button.Text>{args.children}</Button.Text>
     </Button>
   ),
+};
+
+export const Sizes: Story = {
+  render: args => (
+    <XStack gap="$4">
+      <Button {...args} size="sm">
+        <Button.Text>Small {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="md">
+        <Button.Text>Medium {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="lg">
+        <Button.Text>Large {args.children}</Button.Text>
+      </Button>
+    </XStack>
+  ),
+};
+
+export const Loading: Story = {
+  render: args => (
+    <XStack gap="$4">
+      <Button {...args} size="sm">
+        <Button.Text>Small {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="md">
+        <Button.Text>Medium {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="lg">
+        <Button.Text>Large {args.children}</Button.Text>
+      </Button>
+    </XStack>
+  ),
   args: {
-    size: '$xl',
-    theme: 'blue',
-    children: 'Button',
+    loading: true,
+    children: 'Loading...',
+  },
+};
+
+export const LoadingOutlined: Story = {
+  render: args => (
+    <XStack gap="$4">
+      <Button {...args} size="sm">
+        <Button.Text>Small {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="md">
+        <Button.Text>Medium {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="lg">
+        <Button.Text>Large {args.children}</Button.Text>
+      </Button>
+    </XStack>
+  ),
+  args: {
+    loading: true,
+    children: 'Loading...',
+  },
+};
+
+export const Disabled: Story = {
+  render: args => (
+    <XStack gap="$4">
+      <Button {...args} size="sm">
+        <Button.Text>Small {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="md">
+        <Button.Text>Medium {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="lg">
+        <Button.Text>Large {args.children}</Button.Text>
+      </Button>
+    </XStack>
+  ),
+  args: {
+    disabled: true,
+    children: 'Disabled',
+  },
+};
+
+export const DisabledOutlined: Story = {
+  render: args => (
+    <XStack gap="$4">
+      <Button {...args} size="sm">
+        <Button.Text>Small {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="md">
+        <Button.Text>Medium {args.children}</Button.Text>
+      </Button>
+      <Button {...args} size="lg">
+        <Button.Text>Large {args.children}</Button.Text>
+      </Button>
+    </XStack>
+  ),
+  args: {
+    disabled: true,
+    variant: 'outlined',
+    children: 'Disabled',
   },
 };
