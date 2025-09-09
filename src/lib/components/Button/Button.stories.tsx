@@ -47,6 +47,11 @@ type Story = StoryObj<typeof meta>;
 
 // Default story
 export const Default: Story = {
+  render: args => (
+    <Button {...args}>
+      <Button.Text>{args.children}</Button.Text>
+    </Button>
+  ),
   args: {
     size: '$xl',
     theme: 'blue',

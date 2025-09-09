@@ -27,6 +27,12 @@ const ButtonFrame = styled(TamaguiButton, {
       },
     },
 
+    loading: {
+      true: {
+        // TODO: add loading state
+      },
+    },
+
     disabled: {
       true: {
         opacity: 0.4,
@@ -43,6 +49,7 @@ const ButtonFrame = styled(TamaguiButton, {
 
   defaultVariants: {
     size: '$md',
+    theme: 'blue',
     disabled: false,
   },
 });
