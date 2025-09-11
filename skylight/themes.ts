@@ -1,99 +1,143 @@
-import { createThemes, defaultTemplates, type Template } from '@tamagui/theme-builder';
+import { defaultConfig } from '@tamagui/config/v4';
 
-const blue = {
-  default: '#042F86',
-  hover: '#425799',
-  focus: '#042F86',
-  pressed: '#081D59',
-  loading: '#042F86',
-  disabled: '#011335',
+export const schemeThemes = {
+  light: {
+    ...defaultConfig.themes.light,
+  },
+  dark: {
+    ...defaultConfig.themes.dark,
+  },
 };
 
-const buttonTemplate = {
-  background: 1,
-  backgroundHover: 2,
-  backgroundPress: 3,
-  backgroundFocus: 1,
-  borderColor: 1,
-  borderColorHover: 2,
-  borderColorPress: 3,
-  borderColorFocus: 1,
-  color: -1,
-  colorHover: -1,
-  colorPress: -1,
-  colorFocus: -1,
-  colorTransparent: -1,
-  placeholderColor: -2,
-  shadowColor: 1,
-  shadowColorHover: 2,
-  shadowColorPress: 3,
-  shadowColorFocus: 1,
-} satisfies Template;
-
-export const themes = createThemes({
-  base: {
-    palette: ['#fff', '#000'],
+export const componentThemes = {
+  dark_blue_Button: {
+    color: '#fff',
+    background: '#042f86',
+    backgroundHover: '#39569d',
+    backgroundFocus: '#39569d',
+    backgroundPress: '#072d78',
+    backgroundDisabled: '#8495b8',
+    borderColor: '#042f86',
+    borderColorHover: '#39569d',
+    borderColorFocus: '#39569d',
+    borderColorPress: '#072d78',
+    borderColorDisabled: '#8495b8',
   },
-
-  // templates: {
-  //   ...defaultTemplates,
-  //   button: buttonTemplate,
-  // },
-
-  // componentThemes: {
-  //   Button: {
-  //     template: 'button',
-  //   },
-  // },
-
-  childrenThemes: {
-    blue: {
-      palette: ['#F1F8FC', '#042F86'],
-    },
-    green: {
-      palette: ['#F5FAF5', '#14882C'],
-    },
-    yellow: {
-      palette: ['#FEFBE6', '#9E822E'],
-    },
-    red: {
-      palette: ['#FAF5F5', '#FC5350'],
-    },
+  dark_black_Button: {
+    color: '#fff',
+    background: '#1e2d48',
+    backgroundHover: '#3a475e',
+    backgroundFocus: '#1e2d48',
+    backgroundPress: '#4d586c',
+    backgroundDisabled: '#8e949f',
+    borderColor: '#1e2d48',
+    borderColorHover: '#3a475e',
+    borderColorFocus: '#1e2d48',
+    borderColorPress: '#4d586c',
+    borderColorDisabled: '#8e949f',
   },
-});
-
-console.log(themes);
-
-// const bluePalette = [
-//   '', // 1
-//   blue.default, // 2
-//   blue.hover, // 3
-//   blue.pressed, // 4
-//   blue.default, // 5
-//   '', // 6
-//   '', // 7
-//   '', // 8
-//   '', // 9
-//   '', // 10
-//   '', // 11
-//   '', // 12
-// ];
-
-// const buttonColorTemplate = {
-//   background: 2, // Uses palette index 2
-//   backgroundHover: 3, // Uses palette index 3
-//   backgroundPress: 4, // Uses palette index 4
-//   backgroundFocus: 5, // Uses palette index 5
-//   backgroundStrong: 1, // Uses palette index 1
-//   backgroundTransparent: 0, // Uses palette index 0
-
-//   color: -1, // Uses last palette item
-//   colorHover: -2, // Uses second-to-last palette item
-//   colorPress: -1, // Uses last palette item
-//   colorFocus: -2, // Uses second-to-last palette item
-
-//   borderColor: 5, // Uses palette index 5
-//   borderColorHover: 6, // Uses palette index 6
-//   borderColorFocus: 4, // Uses palette index 4
-//   borderColorPress: 5, // Uses palette index 5
-// };
+  dark_gray_Button: {
+    color: '#042f86',
+    background: '#c6c8cb',
+    backgroundHover: '#bdbfc3',
+    backgroundFocus: '#c6c8cb',
+    backgroundPress: '#aaaeb5',
+    backgroundDisabled: '#d1d2d3',
+    borderColor: '#c6c8cb',
+    borderColorHover: '#bdbfc3',
+    borderColorFocus: '#c6c8cb',
+    borderColorPress: '#aaaeb5',
+    borderColorDisabled: '#d1d2d3',
+  },
+  dark_red_Button: {
+    color: '#fff',
+    background: '#f31c29',
+    backgroundHover: '#c30713',
+    backgroundFocus: '#f31c29',
+    backgroundPress: '#9c0711',
+    backgroundDisabled: '#e38d93',
+    borderColor: '#f31c29',
+    borderColorHover: '#c30713',
+    borderColorFocus: '#f31c29',
+    borderColorPress: '#9c0711',
+    borderColorDisabled: '#e38d93',
+  },
+  dark_green_Button: {
+    color: '#fff',
+    background: '#00aa44',
+    backgroundHover: '#008f39',
+    backgroundFocus: '#00aa44',
+    backgroundPress: '#0f7036',
+    backgroundDisabled: '#82c69d',
+    borderColor: '#00aa44',
+    borderColorHover: '#008f39',
+    borderColorFocus: '#00aa44',
+    borderColorPress: '#0f7036',
+    borderColorDisabled: '#82c69d',
+  },
+  light_blue_Button: {
+    color: '#fff',
+    background: '#042f86',
+    backgroundHover: '#39569d',
+    backgroundFocus: '#39569d',
+    backgroundPress: '#072d78',
+    backgroundDisabled: '#8495b8',
+    borderColor: '#042f86',
+    borderColorHover: '#39569d',
+    borderColorFocus: '#39569d',
+    borderColorPress: '#072d78',
+    borderColorDisabled: '#8495b8',
+  },
+  light_black_Button: {
+    color: '#fff',
+    background: '#1e2d48',
+    backgroundHover: '#3a475e',
+    backgroundFocus: '#1e2d48',
+    backgroundPress: '#4d586c',
+    backgroundDisabled: '#8e949f',
+    borderColor: '#1e2d48',
+    borderColorHover: '#3a475e',
+    borderColorFocus: '#1e2d48',
+    borderColorPress: '#4d586c',
+    borderColorDisabled: '#8e949f',
+  },
+  light_gray_Button: {
+    color: '#042f86',
+    background: '#c6c8cb',
+    backgroundHover: '#bdbfc3',
+    backgroundFocus: '#c6c8cb',
+    backgroundPress: '#aaaeb5',
+    backgroundDisabled: '#d1d2d3',
+    borderColor: '#c6c8cb',
+    borderColorHover: '#bdbfc3',
+    borderColorFocus: '#c6c8cb',
+    borderColorPress: '#aaaeb5',
+    borderColorDisabled: '#d1d2d3',
+  },
+  light_red_Button: {
+    color: '#fff',
+    background: '#f31c29',
+    backgroundHover: '#c30713',
+    backgroundFocus: '#f31c29',
+    backgroundPress: '#9c0711',
+    backgroundDisabled: '#e38d93',
+    borderColor: '#f31c29',
+    borderColorHover: '#c30713',
+    borderColorFocus: '#f31c29',
+    borderColorPress: '#9c0711',
+    borderColorDisabled: '#e38d93',
+  },
+  light_green_Button: {
+    color: '#fff',
+    background: '#00aa44',
+    backgroundHover: '#008f39',
+    backgroundFocus: '#00aa44',
+    backgroundPress: '#0f7036',
+    backgroundDisabled: '#82c69d',
+    borderColor: '#00aa44',
+    borderColorHover: '#008f39',
+    borderColorFocus: '#00aa44',
+    borderColorPress: '#0f7036',
+    borderColorDisabled: '#82c69d',
+  },
+};

@@ -20,7 +20,7 @@ import { Provider } from '@/Provider';
 import { Airplay } from '@tamagui/lucide-icons';
 
 const modes: ThemeName[] = ['light', 'dark'];
-const themes: ThemeName[] = ['blue'];
+const themes: ThemeName[] = ['blue', 'black', 'gray', 'red', 'green'];
 const sizes: ButtonSizeVariants[] = ['sm', 'md', 'lg'];
 
 export const Demo: React.FC = () => {
@@ -73,11 +73,11 @@ export const Demo: React.FC = () => {
                       <H3>Button Variants</H3>
 
                       <XStack gap="$4">
-                        <Button theme={theme} variant="outlined" loading>
-                          <Button.Text>Loading</Button.Text>
+                        <Button theme={theme}>
+                          <Button.Text>Filled</Button.Text>
                         </Button>
-                        <Button theme={theme} variant="outlined" disabled>
-                          <Button.Text>Disabled</Button.Text>
+                        <Button theme={theme} variant="outlined">
+                          <Button.Text>Outlined</Button.Text>
                         </Button>
                       </XStack>
                     </YStack>

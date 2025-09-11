@@ -77,10 +77,14 @@ const ButtonFrame = styled(ThemeableStack, {
     outlineWidth: 3,
   },
 
+  disabledStyle: {
+    pointerEvents: 'none',
+  },
+
   variants: {
     variant: {
       outlined: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: '$borderColor',
         backgroundColor: 'transparent',
         color: '$background',
@@ -119,14 +123,17 @@ const ButtonFrame = styled(ThemeableStack, {
 
     disabled: {
       true: {
-        pointerEvents: 'none',
-        opacity: 0.4,
+        // @ts-expect-error allow custom tokens
+        borderColor: '$borderColorDisabled',
+        // @ts-expect-error allow custom tokens
+        backgroundColor: '$backgroundDisabled',
       },
     },
 
     loading: {
       true: {
-        opacity: 1,
+        borderColor: '$borderColor',
+        backgroundColor: '$background',
       },
     },
   } as const,
@@ -182,6 +189,7 @@ const SpinnerOverlay = styled(View, {
   zIndex: 1,
 });
 
+// @ts-expect-error allow complicated props
 const ButtonComponent = ButtonFrame.styleable<ButtonProps>(function Button(
   { loading = false, disabled = false, children, ...props },
   ref
@@ -206,6 +214,7 @@ const ButtonComponent = ButtonFrame.styleable<ButtonProps>(function Button(
       </XStack>
       {loading && (
         <SpinnerOverlay>
+          {/* @ts-expect-error allow complicated props */}
           <Spinner size="small" color="$color" />
         </SpinnerOverlay>
       )}
