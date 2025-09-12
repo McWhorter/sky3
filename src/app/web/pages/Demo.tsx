@@ -19,7 +19,7 @@ import { Provider } from '@/Provider';
 import { Smile } from '@tamagui/lucide-icons';
 
 const modes: ThemeName[] = ['light', 'dark'];
-const themes: ThemeName[] = ['blue', 'black', 'gray', 'red', 'green'];
+const themes: ThemeName[] = ['blue', 'cyan', 'black', 'gray', 'red', 'green'];
 const sizes: ButtonSizeVariants[] = ['sm', 'md', 'lg'];
 const variants: ButtonVariant[] = ['filled', 'outlined', 'bare'];
 

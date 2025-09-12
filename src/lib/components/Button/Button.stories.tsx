@@ -6,7 +6,7 @@ const mockFn = () => () => console.log('Button clicked');
 
 const variants: ButtonVariant[] = ['filled', 'outlined', 'bare'];
 const sizes: ButtonSizeVariants[] = ['sm', 'md', 'lg'];
-const themes: ThemeName[] = ['blue', 'black', 'gray', 'red', 'green'];
+const themes: ThemeName[] = ['blue', 'cyan', 'black', 'gray', 'red', 'green'];
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
