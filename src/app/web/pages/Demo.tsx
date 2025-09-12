@@ -3,38 +3,33 @@ import {
   ScrollView,
   YStack,
   H1,
-  H2,
   H3,
+  H2,
   H4,
-  H5,
-  H6,
   Text,
   Card,
   Theme,
   XStack,
   type ThemeName,
+  Separator,
 } from 'tamagui';
-import type { ButtonSizeVariants } from '@/components';
+import type { ButtonSizeVariants, ButtonVariant } from '@/components';
 import { Button } from '@/components';
 import { Provider } from '@/Provider';
-import { Airplay } from '@tamagui/lucide-icons';
+import { Smile } from '@tamagui/lucide-icons';
 
 const modes: ThemeName[] = ['light', 'dark'];
 const themes: ThemeName[] = ['blue', 'black', 'gray', 'red', 'green'];
 const sizes: ButtonSizeVariants[] = ['sm', 'md', 'lg'];
+const variants: ButtonVariant[] = ['filled', 'outlined', 'bare'];
 
 export const Demo: React.FC = () => {
   return (
     <Provider>
-      <ScrollView>
+      <ScrollView margin="auto">
         <YStack>
-          <YStack padding="$6" margin="auto">
+          <YStack gap="$xl" padding="$xl">
             <H1>Welcome to Skylight v3</H1>
-            <H2>Welcome to Skylight v3</H2>
-            <H3>Welcome to Skylight v3</H3>
-            <H4>Welcome to Skylight v3</H4>
-            <H5>Welcome to Skylight v3</H5>
-            <H6>Welcome to Skylight v3</H6>
             <Text>
               A modern React UI component library built on Tamagui with comprehensive design tokens,
               themes, and flexible components.
@@ -42,44 +37,60 @@ export const Demo: React.FC = () => {
           </YStack>
           {modes.map(mode => (
             <Theme key={mode} name={mode}>
-              <Card>
-                <YStack gap="$4" padding="$4" margin="auto">
+              <Card borderRadius="$0" paddingVertical="$xl">
+                <YStack gap="$xl" padding="$xl">
                   <H2>Button Component {mode}</H2>
                   {themes.map(theme => (
-                    <YStack gap="$4" key={theme}>
-                      <H3>Button Sizes</H3>
-                      <XStack gap="$4">
-                        {sizes.map(size => (
-                          <Button size={size} theme={theme} key={size}>
-                            <Button.Text>{size} Button</Button.Text>
-                            <Button.Icon>
-                              <Airplay />
-                            </Button.Icon>
+                    <YStack gap="$xl" key={theme}>
+                      <Separator marginVertical="$xl" />
+
+                      <H3>Theme: {theme}</H3>
+
+                      <YStack gap="$xl" key={theme}>
+                        <H4>Button Sizes</H4>
+                        <XStack gap="$md">
+                          {sizes.map(size => (
+                            <Button size={size} theme={theme} key={size}>
+                              <Button.Icon>
+                                <Smile />
+                              </Button.Icon>
+                              <Button.Text>{size} Button</Button.Text>
+                            </Button>
+                          ))}
+                        </XStack>
+
+                        <H4>Button Variants</H4>
+
+                        <XStack gap="$md">
+                          <Button theme={theme} variant="filled">
+                            <Button.Text>Filled</Button.Text>
                           </Button>
-                        ))}
-                      </XStack>
+                          <Button theme={theme} variant="outlined">
+                            <Button.Text>Outlined</Button.Text>
+                          </Button>
+                          <Button theme={theme} variant="bare">
+                            <Button.Text>Bare</Button.Text>
+                          </Button>
+                        </XStack>
 
-                      <H3>Button States</H3>
+                        <H4>Button States</H4>
 
-                      <XStack gap="$4">
-                        <Button theme={theme} loading>
-                          <Button.Text>Loading</Button.Text>
-                        </Button>
-                        <Button theme={theme} disabled>
-                          <Button.Text>Disabled</Button.Text>
-                        </Button>
-                      </XStack>
+                        <XStack gap="$md">
+                          {variants.map(variant => (
+                            <Button theme={theme} variant={variant} key={variant} loading>
+                              <Button.Text>Loading</Button.Text>
+                            </Button>
+                          ))}
+                        </XStack>
 
-                      <H3>Button Variants</H3>
-
-                      <XStack gap="$4">
-                        <Button theme={theme}>
-                          <Button.Text>Filled</Button.Text>
-                        </Button>
-                        <Button theme={theme} variant="outlined">
-                          <Button.Text>Outlined</Button.Text>
-                        </Button>
-                      </XStack>
+                        <XStack gap="$md">
+                          {variants.map(variant => (
+                            <Button theme={theme} variant={variant} key={variant} disabled>
+                              <Button.Text>Disabled</Button.Text>
+                            </Button>
+                          ))}
+                        </XStack>
+                      </YStack>
                     </YStack>
                   ))}
                 </YStack>

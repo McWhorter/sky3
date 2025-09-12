@@ -1,8 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from './Button';
-import { XStack } from 'tamagui';
+import { Button, type ButtonSizeVariants, type ButtonVariant } from './Button';
+import { XStack, YStack, type ThemeName } from 'tamagui';
 
 const mockFn = () => () => console.log('Button clicked');
+
+const variants: ButtonVariant[] = ['filled', 'outlined', 'bare'];
+const sizes: ButtonSizeVariants[] = ['sm', 'md', 'lg'];
+const themes: ThemeName[] = ['blue', 'black', 'gray', 'red', 'green'];
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -20,17 +24,17 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: [undefined, 'outlined'],
+      options: variants,
       description: 'Visual style variant of the button',
     },
     theme: {
       control: 'select',
-      options: ['blue'],
+      options: themes,
       description: 'Theme of the button',
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: sizes,
       description: 'Size of the button',
     },
     loading: {
@@ -47,9 +51,9 @@ const meta: Meta<typeof Button> = {
     },
   },
   args: {
-    theme: 'blue',
-    size: 'md',
-    children: 'Button',
+    loading: false,
+    disabled: false,
+    children: 'Skylight v3',
     onPress: mockFn(),
   },
 };
@@ -67,52 +71,66 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: args => (
-    <XStack gap="$4">
-      <Button {...args} size="sm">
-        <Button.Text>Small {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="md">
-        <Button.Text>Medium {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="lg">
-        <Button.Text>Large {args.children}</Button.Text>
-      </Button>
+    <XStack gap="$md" alignItems="center">
+      {variants.map(variant => (
+        <YStack gap="$md" alignItems="center" key={variant}>
+          <Button {...args} size="sm" variant={variant}>
+            <Button.Text>Small {variant} Button</Button.Text>
+          </Button>
+          <Button {...args} size="md" variant={variant}>
+            <Button.Text>Medium {variant} Button</Button.Text>
+          </Button>
+          <Button {...args} size="lg" variant={variant}>
+            <Button.Text>Large {variant} Button</Button.Text>
+          </Button>
+        </YStack>
+      ))}
     </XStack>
   ),
+  args: {
+    children: 'Button',
+  },
+};
+
+export const Variants: Story = {
+  render: args => (
+    <XStack gap="$md" alignItems="center">
+      {variants.map(variant => (
+        <YStack gap="$md" alignItems="center" key={variant}>
+          <Button {...args} size="sm" variant={variant}>
+            <Button.Text>Small {variant} Button</Button.Text>
+          </Button>
+          <Button {...args} size="md" variant={variant}>
+            <Button.Text>Medium {variant} Button</Button.Text>
+          </Button>
+          <Button {...args} size="lg" variant={variant}>
+            <Button.Text>Large {variant} Button</Button.Text>
+          </Button>
+        </YStack>
+      ))}
+    </XStack>
+  ),
+  args: {
+    children: 'Button',
+  },
 };
 
 export const Loading: Story = {
   render: args => (
-    <XStack gap="$4">
-      <Button {...args} size="sm">
-        <Button.Text>Small {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="md">
-        <Button.Text>Medium {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="lg">
-        <Button.Text>Large {args.children}</Button.Text>
-      </Button>
-    </XStack>
-  ),
-  args: {
-    loading: true,
-    children: 'Loading...',
-  },
-};
-
-export const LoadingOutlined: Story = {
-  render: args => (
-    <XStack gap="$4">
-      <Button {...args} size="sm">
-        <Button.Text>Small {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="md">
-        <Button.Text>Medium {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="lg">
-        <Button.Text>Large {args.children}</Button.Text>
-      </Button>
+    <XStack gap="$md" alignItems="center">
+      {variants.map(variant => (
+        <YStack gap="$md" alignItems="center" key={variant}>
+          <Button {...args} size="sm" variant={variant}>
+            <Button.Text>{args.children}</Button.Text>
+          </Button>
+          <Button {...args} size="md" variant={variant}>
+            <Button.Text>{args.children}</Button.Text>
+          </Button>
+          <Button {...args} size="lg" variant={variant}>
+            <Button.Text>{args.children}</Button.Text>
+          </Button>
+        </YStack>
+      ))}
     </XStack>
   ),
   args: {
@@ -123,41 +141,24 @@ export const LoadingOutlined: Story = {
 
 export const Disabled: Story = {
   render: args => (
-    <XStack gap="$4">
-      <Button {...args} size="sm">
-        <Button.Text>Small {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="md">
-        <Button.Text>Medium {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="lg">
-        <Button.Text>Large {args.children}</Button.Text>
-      </Button>
+    <XStack gap="$md" alignItems="center">
+      {variants.map(variant => (
+        <YStack gap="$md" alignItems="center" key={variant}>
+          <Button {...args} size="sm" variant={variant}>
+            <Button.Text>Small {args.children} Button</Button.Text>
+          </Button>
+          <Button {...args} size="md" variant={variant}>
+            <Button.Text>Medium {args.children} Button</Button.Text>
+          </Button>
+          <Button {...args} size="lg" variant={variant}>
+            <Button.Text>Large {args.children} Button</Button.Text>
+          </Button>
+        </YStack>
+      ))}
     </XStack>
   ),
   args: {
     disabled: true,
-    children: 'Disabled',
-  },
-};
-
-export const DisabledOutlined: Story = {
-  render: args => (
-    <XStack gap="$4">
-      <Button {...args} size="sm">
-        <Button.Text>Small {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="md">
-        <Button.Text>Medium {args.children}</Button.Text>
-      </Button>
-      <Button {...args} size="lg">
-        <Button.Text>Large {args.children}</Button.Text>
-      </Button>
-    </XStack>
-  ),
-  args: {
-    disabled: true,
-    variant: 'outlined',
     children: 'Disabled',
   },
 };

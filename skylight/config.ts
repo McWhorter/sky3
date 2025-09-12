@@ -4,6 +4,15 @@ import { schemeThemes, componentThemes } from './themes';
 
 const skylightTokens = createTokens({
   ...defaultConfig.tokens,
+  space: {
+    ...defaultConfig.tokens.space,
+    xs: 4,
+    true: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+  },
   radius: {
     ...defaultConfig.tokens.radius,
     $true: 6,

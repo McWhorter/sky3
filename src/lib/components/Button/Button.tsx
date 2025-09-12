@@ -19,7 +19,7 @@ import type { ThemeableProps } from '@tamagui/web';
 import { useContext } from 'react';
 
 export type ButtonSizeVariants = 'sm' | 'md' | 'lg';
-export type ButtonVariant = 'outlined';
+export type ButtonVariant = 'filled' | 'outlined' | 'bare';
 type ButtonExtraProps = TextParentStyles &
   ThemeableProps & {
     size?: ButtonSizeVariants;
@@ -61,87 +61,98 @@ const ButtonFrame = styled(ThemeableStack, {
   backgrounded: true,
 
   position: 'relative',
-  animation: 'quickest',
+  animation: '200ms',
   justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'nowrap',
   flexDirection: 'row',
   cursor: 'pointer',
-  borderColor: 'transparent',
   borderRadius: '$true',
+  borderColor: '$borderColor',
   borderWidth: 1,
 
   focusVisibleStyle: {
+    borderColor: 'transparent',
     outlineColor: '$outlineColor',
     outlineStyle: 'solid',
-    outlineWidth: 3,
+    outlineWidth: 6,
   },
 
   disabledStyle: {
     pointerEvents: 'none',
+    opacity: 0.4,
   },
 
   variants: {
     variant: {
+      filled: {
+        backgroundColor: '$background',
+        color: '$color',
+      },
+
       outlined: {
-        borderWidth: 1,
-        borderColor: '$borderColor',
         backgroundColor: 'transparent',
         color: '$background',
 
         hoverStyle: {
-          borderColor: '$borderColorHover',
-          backgroundColor: 'transparent',
+          backgroundColor: '$altBackgroundHover',
         },
 
         pressStyle: {
-          borderColor: '$borderColorPress',
-          backgroundColor: 'transparent',
+          backgroundColor: '$altBackgroundPress',
         },
 
         focusVisibleStyle: {
-          borderColor: '$borderColorFocus',
-          backgroundColor: 'transparent',
+          backgroundColor: '$altBackgroundFocus',
+        },
+      },
+
+      bare: {
+        borderWidth: 0,
+        backgroundColor: 'transparent',
+        color: '$background',
+
+        hoverStyle: {
+          backgroundColor: '$altBackgroundHover',
+        },
+
+        pressStyle: {
+          backgroundColor: '$altBackgroundPress',
+        },
+
+        focusVisibleStyle: {
+          backgroundColor: '$altBackgroundFocus',
+        },
+      },
+    },
+
+    loading: {
+      true: {
+        disabledStyle: {
+          opacity: 1,
         },
       },
     },
 
     size: {
       sm: {
-        height: '$3',
-        paddingHorizontal: 15,
+        height: 32,
+        paddingHorizontal: 12,
       },
       md: {
-        height: '$3.5',
-        paddingHorizontal: 30,
+        height: 40,
+        paddingHorizontal: 16,
       },
       lg: {
-        height: '$4',
+        height: 48,
         paddingHorizontal: 30,
-      },
-    },
-
-    disabled: {
-      true: {
-        // @ts-expect-error allow custom tokens
-        borderColor: '$borderColorDisabled',
-        // @ts-expect-error allow custom tokens
-        backgroundColor: '$backgroundDisabled',
-      },
-    },
-
-    loading: {
-      true: {
-        borderColor: '$borderColor',
-        backgroundColor: '$background',
       },
     },
   } as const,
 
   defaultVariants: {
     size: 'md',
-    loading: false,
-    disabled: false,
+    variant: 'filled',
   },
 });
 
@@ -162,13 +173,13 @@ const ButtonText = styled(SizableText, {
 });
 
 const ButtonIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
-  const { children, scaleIcon = 2 } = props;
+  const { children, scaleIcon = 1 } = props;
   const { color, size = 'md' } = useContext(ButtonContext);
 
   const iconSizes = {
-    sm: '$1',
-    md: '$1',
-    lg: '$1',
+    sm: 16,
+    md: 20,
+    lg: 24,
   };
 
   const iconSize = getFontSize(iconSizes[size]) * scaleIcon;
@@ -191,21 +202,22 @@ const SpinnerOverlay = styled(View, {
 
 // @ts-expect-error allow complicated props
 const ButtonComponent = ButtonFrame.styleable<ButtonProps>(function Button(
-  { loading = false, disabled = false, children, ...props },
+  { variant = 'filled', children, loading, disabled, ...props },
   ref
 ) {
   const isFunctionallyDisabled = disabled || loading;
+  const loadingColor = variant === 'filled' ? '$color' : '$background';
 
   return (
     <ButtonFrame
       ref={ref}
-      disabled={isFunctionallyDisabled}
       loading={loading}
+      disabled={isFunctionallyDisabled}
       aria-busy={loading}
       {...props}
     >
       <XStack
-        gap="$3"
+        gap="$sm"
         alignItems="center"
         justifyContent="center"
         style={{ visibility: loading ? 'hidden' : 'visible' }}
@@ -215,7 +227,7 @@ const ButtonComponent = ButtonFrame.styleable<ButtonProps>(function Button(
       {loading && (
         <SpinnerOverlay>
           {/* @ts-expect-error allow complicated props */}
-          <Spinner size="small" color="$color" />
+          <Spinner size="small" color={loadingColor} />
         </SpinnerOverlay>
       )}
     </ButtonFrame>
